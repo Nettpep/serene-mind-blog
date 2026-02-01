@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLink, Star } from 'lucide-react';
+import type { Locale } from '@/i18n-config';
 
 interface ProductRecommendationProps {
     name: string;
@@ -14,6 +15,14 @@ interface ProductRecommendationProps {
     affiliateLink: string;
     category?: string;
     inStock?: boolean;
+    locale?: Locale;
+    dictionary?: {
+        product: {
+            viewProduct: string;
+            outOfStock: string;
+            affiliateDisclaimer: string;
+        };
+    };
 }
 
 const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
@@ -25,7 +34,9 @@ const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
     imageUrl,
     affiliateLink,
     category,
-    inStock = true
+    inStock = true,
+    locale = 'th',
+    dictionary
 }) => {
     const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
@@ -54,7 +65,7 @@ const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
                 {!inStock && (
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                         <span className="px-4 py-2 bg-white text-zen-text font-bold rounded-lg">
-                            สินค้าหมด
+                            {dictionary?.product.outOfStock || (locale === 'th' ? 'สินค้าหมด' : 'Out of Stock')}
                         </span>
                     </div>
                 )}
@@ -118,13 +129,16 @@ const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
                         }`}
                     onClick={(e) => !inStock && e.preventDefault()}
                 >
-                    {inStock ? 'ดูสินค้า' : 'สินค้าหมด'}
+                    {inStock 
+                        ? (dictionary?.product.viewProduct || (locale === 'th' ? 'ดูสินค้า' : 'View Product'))
+                        : (dictionary?.product.outOfStock || (locale === 'th' ? 'สินค้าหมด' : 'Out of Stock'))
+                    }
                     {inStock && <ExternalLink size={14} />}
                 </a>
 
                 {/* Affiliate Disclaimer */}
                 <p className="text-[10px] text-zen-muted text-center mt-2">
-                    *ลิงก์พันธมิตร เราได้รับค่าคอมมิชชั่น
+                    {dictionary?.product.affiliateDisclaimer || (locale === 'th' ? '*ลิงก์พันธมิตร เราได้รับค่าคอมมิชชั่น' : '*Affiliate link, we earn commission')}
                 </p>
             </div>
         </div>

@@ -61,6 +61,8 @@ export default async function Home({ params }: PageProps) {
               affiliateLink="#"
               category={lang === 'th' ? 'อุปกรณ์สมาธิ' : 'Meditation Equipment'}
               inStock={true}
+              locale={lang}
+              dictionary={dictionary}
             />
             <ProductRecommendation
               name={lang === 'th' ? 'ธูปหอม Mindfulness Collection' : 'Mindfulness Collection Incense'}
@@ -74,6 +76,8 @@ export default async function Home({ params }: PageProps) {
               affiliateLink="#"
               category={lang === 'th' ? 'ธูปหอม' : 'Incense'}
               inStock={true}
+              locale={lang}
+              dictionary={dictionary}
             />
             <ProductRecommendation
               name={lang === 'th' ? 'หนังสือ: วิปัสสนาเบื้องต้น' : 'Book: Introduction to Vipassana'}
@@ -87,6 +91,8 @@ export default async function Home({ params }: PageProps) {
               affiliateLink="#"
               category={lang === 'th' ? 'หนังสือ' : 'Books'}
               inStock={true}
+              locale={lang}
+              dictionary={dictionary}
             />
             <ProductRecommendation
               name={lang === 'th' ? 'ผ้าคลุมไหล่สำหรับสมาธิ' : 'Meditation Shawl'}
@@ -100,6 +106,8 @@ export default async function Home({ params }: PageProps) {
               affiliateLink="#"
               category={lang === 'th' ? 'อุปกรณ์สมาธิ' : 'Meditation Equipment'}
               inStock={true}
+              locale={lang}
+              dictionary={dictionary}
             />
           </div>
           

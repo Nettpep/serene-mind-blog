@@ -29,12 +29,13 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
 export default async function RootLayout({ children, params }: LayoutProps) {
   const { lang } = await params
+  const dictionary = await getDictionary(lang)
   
   return (
     <>
       <Header currentLang={lang} />
       {children}
-      <Footer />
+      <Footer locale={lang} dictionary={dictionary} />
     </>
   )
 }

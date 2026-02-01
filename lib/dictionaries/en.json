@@ -67,6 +67,12 @@
   },
   "footer": {
     "copyright": "All rights reserved",
-    "newsletterDescription": "Get mindfulness articles and inspiration delivered to your inbox"
+    "newsletterDescription": "Get mindfulness articles and inspiration delivered to your inbox",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactUs": "Contact Us",
+    "brandDescription": "A space for awakening, understanding oneself, and understanding the world through the perspective of psychology and Buddhism. We believe that \"peace\" begins with understanding cause and effect."
   }
 }
