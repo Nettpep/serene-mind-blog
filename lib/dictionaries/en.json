@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "categories": "Categories"
+  },
+  "hero": {
+    "title": "Serene Mind",
+    "subtitle": "Where Ancient Wisdom Meets Modern Technology",
+    "tagline": "Mindfulness & Causality",
+    "description": "Discover peace of mind through the laws of nature. Learn to be present and truly understand the origin of all feelings.",
+    "cta": "Start Reading Articles"
+  },
+  "post": {
+    "readTime": "min read",
+    "read": "read",
+    "readMore": "Read More",
+    "backToHome": "Back to Home",
+    "sharePost": "Share this post",
+    "tags": "Tags",
+    "relatedPosts": "Related Posts",
+    "recommendedProducts": "Recommended Products",
+    "qualityProducts": "Quality products we've curated to support your meditation practice and mindful living",
+    "expertSelected": "Expert Selected",
+    "qualityGuaranteed": "Quality Guaranteed"
+  },
+  "category": {
+    "all": "All",
+    "innerPeace": "Inner Peace",
+    "futureMind": "Future Mind",
+    "mindScience": "Mind Science",
+    "causalLife": "Causal Life",
+    "zenHealth": "Zen Health",
+    "mindfulRelationships": "Mindful Relationships"
+  },
+  "dailyQuote": {
+    "title": "Daily Dharma"
+  },
+  "share": {
+    "facebook": "Share on Facebook",
+    "twitter": "Share on X",
+    "line": "Share on Line",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "share": "Share"
+  },
+  "product": {
+    "viewProduct": "View Product",
+    "outOfStock": "Out of Stock",
+    "affiliateDisclaimer": "*Affiliate link, we earn commission"
+  },
+  "series": {
+    "part": "Part",
+    "of": "of",
+    "viewSeries": "View Series",
+    "previous": "Previous",
+    "next": "Next",
+    "inThisSeries": "In This Series"
+  },
+  "search": {
+    "placeholder": "Search posts...",
+    "startTyping": "Start typing to search posts...",
+    "found": "Found",
+    "posts": "posts",
+    "noPosts": "No posts found in this category"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "newsletterDescription": "Get mindfulness articles and inspiration delivered to your inbox",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactUs": "Contact Us",
+    "brandDescription": "A space for awakening, understanding oneself, and understanding the world through the perspective of psychology and Buddhism. We believe that \"peace\" begins with understanding cause and effect."
+  }
+}

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import { i18n } from '@/i18n-config'
+import LangScript from '@/components/LangScript'
 
 export const metadata: Metadata = {
   title: 'Serene Mind | จิตวิทยาและสมาธิ',
@@ -15,11 +15,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="th">
+    <html lang={i18n.defaultLocale} suppressHydrationWarning>
       <body className="min-h-screen bg-zen-bg text-zen-text font-sans selection:bg-zen-accent/20 selection:text-zen-accent">
-        <Header />
+        <LangScript />
         {children}
-        <Footer />
       </body>
     </html>
   )

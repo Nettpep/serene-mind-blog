@@ -3,12 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import SearchBarWrapper from './SearchBarWrapper';
+import LanguageSwitcher from './LanguageSwitcher';
+import type { Locale } from '@/i18n-config';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  currentLang: Locale;
+}
+
+const Header: React.FC<HeaderProps> = ({ currentLang }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,10 +26,13 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Extract lang from pathname
+  const lang = pathname.split('/')[1] as Locale || currentLang;
+
   const navLinks = [
-    { name: 'หน้าแรก', path: '/' },
-    { name: 'บทความ', path: '/' },
-    { name: 'เกี่ยวกับเรา', path: '/about' },
+    { name: currentLang === 'th' ? 'หน้าแรก' : 'Home', path: `/${lang}` },
+    { name: currentLang === 'th' ? 'บทความ' : 'Blog', path: `/${lang}` },
+    { name: currentLang === 'th' ? 'เกี่ยวกับเรา' : 'About', path: `/${lang}/about` },
   ];
 
   return (
@@ -60,6 +71,11 @@ const Header: React.FC = () => {
           {/* Search Bar */}
           <SearchBarWrapper />
           
+          <div className="h-4 w-[1px] bg-gray-300"></div>
+
+          {/* Language Switcher */}
+          <LanguageSwitcher currentLang={lang} />
+
           <div className="h-4 w-[1px] bg-gray-300"></div>
 
           <button 

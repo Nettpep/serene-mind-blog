@@ -4,14 +4,22 @@ import Image from 'next/image';
 import { BlogPost } from '@/types';
 import { ArrowRight } from 'lucide-react';
 import { formatThaiDate } from '@/lib/date';
+import type { Locale } from '@/i18n-config';
 
 interface BlogCardProps {
   post: BlogPost;
+  locale: Locale;
+  dictionary: {
+    post: {
+      read: string;
+      readMore: string;
+    };
+  };
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ post, locale, dictionary }) => {
   return (
-    <Link href={`/post/${post.id}`} className="group block h-full">
+    <Link href={`/${locale}/post/${post.id}`} className="group block h-full">
       <article className="h-full bg-zen-surface rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-zen-accent/5 transition-all duration-500 ease-out flex flex-col hover:-translate-y-2">
         {/* Image Container */}
         <div className="relative overflow-hidden aspect-[16/10]">
@@ -33,7 +41,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           <div className="flex items-center gap-3 text-xs text-zen-muted mb-4 font-medium uppercase tracking-wider">
             <span>{formatThaiDate(post.date)}</span>
             <span className="w-1 h-1 bg-zen-muted/50 rounded-full"></span>
-            <span>{post.readTime} อ่าน</span>
+            <span>{post.readTime} {dictionary.post.read}</span>
           </div>
 
           <h3 className="font-serif text-2xl text-zen-text mb-4 group-hover:text-zen-accent transition-colors leading-tight">
@@ -45,7 +53,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           </p>
 
           <div className="pt-4 flex items-center text-zen-accent font-medium text-sm gap-2 group/btn">
-            อ่านต่อ 
+            {dictionary.post.readMore}
             <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
           </div>
         </div>

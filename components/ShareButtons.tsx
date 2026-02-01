@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Share2, Link as LinkIcon, Check } from 'lucide-react';
 import { FaFacebookF, FaXTwitter } from 'react-icons/fa6';
 import { SiLine } from 'react-icons/si';
+import { useDictionary } from '@/lib/use-dictionary';
 
 interface ShareButtonsProps {
     url: string;
@@ -12,6 +13,7 @@ interface ShareButtonsProps {
 }
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title, description }) => {
+    const { dict } = useDictionary();
     const [copied, setCopied] = useState(false);
     const [shareUrl, setShareUrl] = useState<string>(url);
     const [isClient, setIsClient] = useState(false);
@@ -85,10 +87,12 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title, description }) 
         </a>
     );
 
+    if (!dict) return null;
+
     return (
         <div className="flex flex-col gap-4">
             <h3 className="text-sm uppercase tracking-[0.2em] text-zen-muted font-bold">
-                แชร์บทความนี้
+                {dict.post.sharePost}
             </h3>
 
             <div className="flex flex-wrap gap-3">
@@ -145,7 +149,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title, description }) 
                         aria-label="Share"
                     >
                         <Share2 size={18} />
-                        <span>แชร์</span>
+                        <span>{dict.share.share}</span>
                     </button>
                 )}
             </div>

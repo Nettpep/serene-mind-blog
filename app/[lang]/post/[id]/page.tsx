@@ -5,6 +5,8 @@ import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
 import { getPostBySlug, getAllPostSlugs, getAllPosts } from '@/lib/markdown'
 import { extractTocFromHtml } from '@/lib/toc'
 import { formatThaiDate } from '@/lib/date'
+import { getDictionary } from '@/lib/get-dictionary'
+import type { Locale } from '@/i18n-config'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import TableOfContents from '@/components/TableOfContents'
 import SeriesNavigation from '@/components/SeriesNavigation'
@@ -16,13 +18,15 @@ import ScrollToTop from './ScrollToTop'
 
 interface PageProps {
   params: Promise<{
+    lang: Locale
     id: string
   }>
 }
 
 export default async function BlogPostDetail({ params }: PageProps) {
-  const { id } = await params
-  const post = await getPostBySlug(id)
+  const { lang, id } = await params
+  const dictionary = await getDictionary(lang)
+  const post = await getPostBySlug(id, lang)
 
   if (!post) {
     notFound()
@@ -32,7 +36,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
   const tocItems = extractTocFromHtml(post.content)
 
   // Get all posts for series navigation
-  const allPosts = await getAllPosts()
+  const allPosts = await getAllPosts(lang)
 
   return (
     <>
@@ -42,8 +46,8 @@ export default async function BlogPostDetail({ params }: PageProps) {
       <main className="pt-32 pb-20 min-h-screen relative bg-zen-bg">
         {/* Header Section */}
         <header className="container mx-auto px-6 mb-16 max-w-4xl text-center">
-          <Link href="/" className="inline-flex items-center text-zen-muted hover:text-zen-accent mb-10 transition-colors text-xs font-bold uppercase tracking-widest gap-2">
-            <ArrowLeft size={14} /> กลับหน้าแรก
+          <Link href={`/${lang}`} className="inline-flex items-center text-zen-muted hover:text-zen-accent mb-10 transition-colors text-xs font-bold uppercase tracking-widest gap-2">
+            <ArrowLeft size={14} /> {dictionary.post.backToHome}
           </Link>
 
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-zen-text leading-tight mb-8">
@@ -56,7 +60,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
             </span>
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
             <span className="flex items-center gap-2">
-              <User size={16} className="text-zen-accent" /> กองบรรณาธิการ
+              <User size={16} className="text-zen-accent" /> {lang === 'th' ? 'กองบรรณาธิการ' : 'Editorial Team'}
             </span>
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
             <span className="text-zen-accent bg-zen-accent/10 px-3 py-1 rounded-full">
@@ -116,7 +120,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
             {/* Share Buttons */}
             <div className="mt-12">
               <ShareButtons
-                url={`/post/${post.id}`}
+                url={`/${lang}/post/${post.id}`}
                 title={post.title}
                 description={post.excerpt}
               />
@@ -133,63 +137,83 @@ export default async function BlogPostDetail({ params }: PageProps) {
                 <div className="inline-flex items-center gap-3 mb-4">
                   <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-zen-accent to-zen-accent" />
                   <h3 className="text-lg font-serif text-zen-text font-bold">
-                    สินค้าแนะนำ
+                    {dictionary.post.recommendedProducts}
                   </h3>
                   <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-zen-accent to-zen-accent" />
                 </div>
                 <p className="text-sm text-zen-muted max-w-md mx-auto">
-                  สินค้าคุณภาพที่เราคัดสรรมาเพื่อช่วยส่งเสริมการฝึกสมาธิและการดำรงชีวิตอย่างมีสติ
+                  {dictionary.post.qualityProducts}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 <ProductRecommendation
-                  name="หมอนนั่งสมาธิ Zafu แบบดั้งเดิม"
-                  description="หมอนนั่งสมาธิคุณภาพสูง เหมาะสำหรับผู้ฝึกสมาธิทุกระดับ"
+                  name={lang === 'th' ? 'หมอนนั่งสมาธิ Zafu แบบดั้งเดิม' : 'Traditional Zafu Meditation Cushion'}
+                  description={lang === 'th' 
+                    ? 'หมอนนั่งสมาธิคุณภาพสูง เหมาะสำหรับผู้ฝึกสมาธิทุกระดับ'
+                    : 'High-quality meditation cushion suitable for practitioners of all levels'
+                  }
                   price={890}
                   originalPrice={1290}
                   rating={5}
                   imageUrl="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&h=400&fit=crop"
                   affiliateLink="#"
-                  category="อุปกรณ์สมาธิ"
+                  category={lang === 'th' ? 'อุปกรณ์สมาธิ' : 'Meditation Equipment'}
                   inStock={true}
+                  locale={lang}
+                  dictionary={dictionary}
                 />
                 <ProductRecommendation
-                  name="ธูปหอม Mindfulness Collection"
-                  description="ธูปหอมธรรมชาติ กลิ่นสงบ เหมาะสำหรับการฝึกสมาธิ"
+                  name={lang === 'th' ? 'ธูปหอม Mindfulness Collection' : 'Mindfulness Collection Incense'}
+                  description={lang === 'th'
+                    ? 'ธูปหอมธรรมชาติ กลิ่นสงบ เหมาะสำหรับการฝึกสมาธิ'
+                    : 'Natural incense with calming scents, perfect for meditation practice'
+                  }
                   price={350}
                   rating={4}
                   imageUrl="https://images.unsplash.com/photo-1598543535441-72ad7e9b6b41?w=400&h=400&fit=crop"
                   affiliateLink="#"
-                  category="ธูปหอม"
+                  category={lang === 'th' ? 'ธูปหอม' : 'Incense'}
                   inStock={true}
+                  locale={lang}
+                  dictionary={dictionary}
                 />
                 <ProductRecommendation
-                  name="หนังสือ: วิปัสสนาเบื้องต้น"
-                  description="คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น"
+                  name={lang === 'th' ? 'หนังสือ: วิปัสสนาเบื้องต้น' : 'Book: Introduction to Vipassana'}
+                  description={lang === 'th'
+                    ? 'คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น'
+                    : 'A guide to meditation and wisdom for beginners'
+                  }
                   price={450}
                   rating={5}
                   imageUrl="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&h=400&fit=crop"
                   affiliateLink="#"
-                  category="หนังสือ"
+                  category={lang === 'th' ? 'หนังสือ' : 'Books'}
                   inStock={true}
+                  locale={lang}
+                  dictionary={dictionary}
                 />
                 <ProductRecommendation
-                  name="ผ้าคลุมไหล่สำหรับสมาธิ"
-                  description="ผ้าคลุมไหล่เนื้อนุ่ม อบอุ่น เหมาะสำหรับการนั่งสมาธิ"
+                  name={lang === 'th' ? 'ผ้าคลุมไหล่สำหรับสมาธิ' : 'Meditation Shawl'}
+                  description={lang === 'th'
+                    ? 'ผ้าคลุมไหล่เนื้อนุ่ม อบอุ่น เหมาะสำหรับการนั่งสมาธิ'
+                    : 'Soft, warm shawl perfect for meditation sessions'
+                  }
                   price={590}
                   rating={4}
                   imageUrl="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=400&fit=crop"
                   affiliateLink="#"
-                  category="อุปกรณ์สมาธิ"
+                  category={lang === 'th' ? 'อุปกรณ์สมาธิ' : 'Meditation Equipment'}
                   inStock={true}
+                  locale={lang}
+                  dictionary={dictionary}
                 />
               </div>
 
               {/* Trust Badge */}
               <div className="mt-8 text-center">
                 <p className="text-xs text-zen-muted">
-                  ✓ คัดสรรโดยผู้เชี่ยวชาญ  •  ✓ คุณภาพรับรอง
+                  ✓ {dictionary.post.expertSelected}  •  ✓ {dictionary.post.qualityGuaranteed}
                 </p>
               </div>
             </div>
@@ -208,10 +232,13 @@ export default async function BlogPostDetail({ params }: PageProps) {
             {/* Ad Space - Static (ไม่เลื่อนตาม, อยู่ด้านล่าง) */}
             <div className="mt-8 space-y-6">
               <AdCard
-                title="หนังสือ: วิปัสสนาเบื้องต้น"
-                description="คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น เขียนโดยพระอาจารย์ชื่อดัง"
+                title={lang === 'th' ? 'หนังสือ: วิปัสสนาเบื้องต้น' : 'Book: Introduction to Vipassana'}
+                description={lang === 'th'
+                  ? 'คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น เขียนโดยพระอาจารย์ชื่อดัง'
+                  : 'A guide to meditation and wisdom for beginners, written by renowned teachers'
+                }
                 imageUrl="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&h=250&fit=crop"
-                ctaText="ซื้อเลย"
+                ctaText={lang === 'th' ? 'ซื้อเลย' : 'Buy Now'}
                 ctaLink="#"
                 type="affiliate"
               />
@@ -225,8 +252,13 @@ export default async function BlogPostDetail({ params }: PageProps) {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs()
-  return slugs.map((slug) => ({
-    id: slug,
-  }))
+  const locales: Locale[] = ['th', 'en']
+  
+  return locales.flatMap((locale) => {
+    const slugs = getAllPostSlugs(locale)
+    return slugs.map((slug) => ({
+      lang: locale,
+      id: slug,
+    }))
+  })
 }

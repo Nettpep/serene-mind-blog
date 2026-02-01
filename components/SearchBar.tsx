@@ -6,12 +6,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { BlogPost } from '@/types'
 import Fuse from 'fuse.js'
+import { useDictionary } from '@/lib/use-dictionary'
 
 interface SearchBarProps {
   posts: BlogPost[]
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
+  const { dict, lang } = useDictionary()
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<BlogPost[]>([])
@@ -75,6 +77,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
     }
   }
 
+  if (!dict) return null
+
   return (
     <div ref={searchRef} className="relative">
       {/* Search Button/Input */}
@@ -84,7 +88,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
         aria-label="Search"
       >
         <Search size={16} />
-        <span className="hidden md:inline">ค้นหา...</span>
+        <span className="hidden md:inline">{dict.search.placeholder}</span>
         <kbd className="hidden lg:inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold text-zen-text/50 bg-stone-100 border border-stone-200 rounded">
           <span className="text-xs">⌘</span>K
         </kbd>
@@ -94,7 +98,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4">
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/20 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
@@ -110,7 +114,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="ค้นหาบทความ..."
+                placeholder={dict.search.placeholder}
                 className="flex-1 bg-transparent outline-none text-zen-text placeholder:text-zen-muted"
               />
               {query && (
@@ -129,21 +133,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
               {query.trim().length === 0 ? (
                 <div className="p-8 text-center text-zen-muted">
                   <Search size={32} className="mx-auto mb-3 opacity-50" />
-                  <p className="text-sm">เริ่มพิมพ์เพื่อค้นหาบทความ...</p>
+                  <p className="text-sm">{dict.search.startTyping}</p>
                 </div>
               ) : results.length === 0 ? (
                 <div className="p-8 text-center text-zen-muted">
-                  <p className="text-sm">ไม่พบผลลัพธ์สำหรับ "{query}"</p>
+                  <p className="text-sm">{dict.search.noPosts.replace('{query}', query)}</p>
                 </div>
               ) : (
                 <div className="p-2">
                   <div className="px-3 py-2 text-xs text-zen-muted font-medium">
-                    พบ {results.length} บทความ
+                    {dict.search.found} {results.length} {dict.search.posts}
                   </div>
                   {results.map((post) => (
                     <Link
                       key={post.id}
-                      href={`/post/${post.id}`}
+                      href={`/${lang}/post/${post.id}`}
                       onClick={() => {
                         setIsOpen(false)
                         setQuery('')

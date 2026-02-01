@@ -1,9 +1,12 @@
+'use client'
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import { BlogPost } from '@/types';
 import { formatThaiDate } from '@/lib/date';
+import { useDictionary } from '@/lib/use-dictionary';
 
 interface RelatedPostsProps {
     currentPost: BlogPost;
@@ -30,6 +33,7 @@ function calculateRelevance(post: BlogPost, currentPost: BlogPost): number {
 }
 
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ currentPost, allPosts, maxPosts = 3 }) => {
+    const { dict, lang } = useDictionary();
     // Filter out current post and calculate relevance
     const relatedPosts = allPosts
         .filter(post => post.id !== currentPost.id)
@@ -55,18 +59,19 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ currentPost, allPosts, maxP
     }
 
     if (relatedPosts.length === 0) return null;
+    if (!dict) return null;
 
     return (
         <div className="mt-20 pt-12 border-t border-stone-200">
             <h2 className="font-serif text-3xl text-zen-text mb-8">
-                บทความที่เกี่ยวข้อง
+                {dict.post.relatedPosts}
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((post) => (
                     <Link
                         key={post.id}
-                        href={`/post/${post.id}`}
+                        href={`/${lang}/post/${post.id}`}
                         className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-stone-100 hover:border-zen-accent"
                     >
                         {/* Image */}

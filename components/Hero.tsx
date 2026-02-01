@@ -2,8 +2,22 @@
 
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
+import type { Locale } from '@/i18n-config';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  locale: Locale;
+  dictionary: {
+    hero: {
+      title: string;
+      subtitle: string;
+      tagline: string;
+      description: string;
+      cta: string;
+    };
+  };
+}
+
+const Hero: React.FC<HeroProps> = ({ locale, dictionary }) => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image with Soft Overlay */}
@@ -19,27 +33,37 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10 text-center max-w-4xl mt-10">
         <span className="inline-block px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-white/50 text-zen-accent tracking-widest text-xs uppercase font-medium mb-6 shadow-sm animate-fade-in-up">
-          Mindfulness & Causality
+          {dictionary.hero.tagline}
         </span>
         
         <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-zen-text leading-[1.3] mb-8 animate-fade-in-up delay-100">
-          <span className="block mb-2">เมื่อสิ่งนี้มี...</span>
-          <span className="block italic text-zen-accent font-light leading-[1.4]">
-            สิ่งนี้ย่อมมี
-          </span>
+          {locale === 'th' ? (
+            <>
+              <span className="block mb-2">เมื่อสิ่งนี้มี...</span>
+              <span className="block italic text-zen-accent font-light leading-[1.4]">
+                สิ่งนี้ย่อมมี
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="block mb-2">When this exists...</span>
+              <span className="block italic text-zen-accent font-light leading-[1.4]">
+                This will exist
+              </span>
+            </>
+          )}
         </h1>
         
         <p className="font-sans text-lg md:text-xl text-zen-text/70 mb-12 max-w-2xl mx-auto leading-relaxed font-light animate-fade-in-up delay-200">
-          ค้นพบความสงบในจิตใจผ่านกฎแห่งธรรมชาติ เรียนรู้ที่จะอยู่กับปัจจุบัน
-          และเข้าใจที่มาของทุกความรู้สึกอย่างถ่องแท้
+          {dictionary.hero.description}
         </p>
 
         <div className="animate-fade-in-up delay-300">
           <button 
-            onClick={() => document.getElementById('latest-posts')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('latest-posts')?.scrollIntoView({ behavior: 'smooth' })} 
             className="group flex flex-col items-center gap-3 text-zen-muted hover:text-zen-accent transition-colors duration-500 cursor-pointer mx-auto"
           >
-             <span className="text-sm tracking-widest uppercase">เริ่มอ่านบทความ</span>
+             <span className="text-sm tracking-widest uppercase">{dictionary.hero.cta}</span>
              <div className="w-10 h-10 rounded-full border border-zen-muted/30 group-hover:border-zen-accent flex items-center justify-center transition-all">
                <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
              </div>
