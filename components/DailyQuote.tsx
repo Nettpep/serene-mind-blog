@@ -80,31 +80,69 @@ const DailyQuote: React.FC = () => {
     if (!quote) return null;
 
     return (
-        <div className="relative overflow-hidden bg-gradient-to-br from-zen-accent/5 via-white to-zen-accent/10 border border-zen-accent/20 rounded-2xl p-8 md:p-12 shadow-lg">
-            {/* Decorative element */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-zen-accent/5 rounded-full blur-3xl" />
+        <div className="group relative overflow-hidden bg-white border border-stone-200 rounded-3xl shadow-xl shadow-stone-200/50 hover:shadow-2xl hover:shadow-stone-300/50 transition-all duration-500">
+            {/* Decorative Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.03]">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-zen-accent rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-zen-accent rounded-full blur-3xl" />
+            </div>
 
-            <div className="relative">
-                {/* Icon */}
-                <div className="flex items-center gap-3 mb-6">
-                    <Sparkles className="text-zen-accent" size={24} />
-                    <h3 className="text-sm uppercase tracking-[0.3em] text-zen-accent font-bold">
-                        คำคมธรรมะประจำวัน
-                    </h3>
+            <div className="relative p-10 md:p-16">
+                {/* Header with Icon */}
+                <div className="flex items-center justify-center gap-3 mb-10">
+                    <div className="w-10 h-[2px] bg-gradient-to-r from-transparent via-zen-accent to-zen-accent" />
+                    <div className="flex items-center gap-2.5 text-zen-accent">
+                        <Sparkles size={20} strokeWidth={2.5} className="animate-pulse" />
+                        <h3 className="text-xs uppercase tracking-[0.4em] font-bold">
+                            ธรรมะประจำวัน
+                        </h3>
+                    </div>
+                    <div className="w-10 h-[2px] bg-gradient-to-l from-transparent via-zen-accent to-zen-accent" />
                 </div>
 
-                {/* Quote text */}
-                <blockquote className="relative">
-                    <p className="text-2xl md:text-3xl font-serif text-zen-text leading-relaxed mb-6 italic">
-                        "{quote.text}"
-                    </p>
-                    {quote.author && (
-                        <footer className="text-base text-zen-muted font-light">
-                            — {quote.author}
-                        </footer>
-                    )}
-                </blockquote>
+                {/* Quote Container */}
+                <div className="relative max-w-3xl mx-auto">
+                    {/* Opening Quote Mark */}
+                    <div className="absolute -top-4 -left-2 md:-left-8 text-6xl md:text-8xl font-serif text-zen-accent/20 leading-none select-none pointer-events-none">
+                        "
+                    </div>
+
+                    {/* Quote Text */}
+                    <blockquote className="relative px-4 md:px-8">
+                        <p className="text-xl md:text-2xl lg:text-3xl font-serif text-zen-text leading-relaxed text-center mb-0 font-light">
+                            {quote.text}
+                        </p>
+                    </blockquote>
+
+                    {/* Closing Quote Mark */}
+                    <div className="absolute -bottom-8 -right-2 md:-right-8 text-6xl md:text-8xl font-serif text-zen-accent/20 leading-none select-none pointer-events-none">
+                        "
+                    </div>
+                </div>
+
+                {/* Author */}
+                {quote.author && (
+                    <div className="mt-10 flex items-center justify-center gap-3">
+                        <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-zen-accent/40" />
+                        <p className="text-sm md:text-base text-zen-muted font-light tracking-wide">
+                            {quote.author}
+                        </p>
+                        <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-zen-accent/40" />
+                    </div>
+                )}
+
+                {/* Decorative Bottom Element */}
+                <div className="mt-10 flex justify-center">
+                    <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-zen-accent/30 animate-pulse" style={{ animationDelay: '0ms' }} />
+                        <div className="w-2 h-2 rounded-full bg-zen-accent/50 animate-pulse" style={{ animationDelay: '150ms' }} />
+                        <div className="w-1.5 h-1.5 rounded-full bg-zen-accent/30 animate-pulse" style={{ animationDelay: '300ms' }} />
+                    </div>
+                </div>
             </div>
+
+            {/* Subtle Shine Effect on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 pointer-events-none" />
         </div>
     );
 };

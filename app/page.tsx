@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero'
 import DailyQuote from '@/components/DailyQuote'
 import PostList from '@/components/PostList'
+import AdSpace from '@/components/AdSpace'
 import { getAllPosts } from '@/lib/markdown'
 
 export default async function Home() {
@@ -25,6 +26,11 @@ export default async function Home() {
         </div>
 
         <PostList initialPosts={posts} />
+
+        {/* Banner Ad (หน้าแรก) */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <AdSpace variant="banner" title="สินค้าแนะนำ" />
+        </div>
       </main>
     </>
   )

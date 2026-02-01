@@ -10,6 +10,8 @@ import TableOfContents from '@/components/TableOfContents'
 import SeriesNavigation from '@/components/SeriesNavigation'
 import ShareButtons from '@/components/ShareButtons'
 import RelatedPosts from '@/components/RelatedPosts'
+import ProductRecommendation from '@/components/ProductRecommendation'
+import AdCard from '@/components/AdCard'
 import ScrollToTop from './ScrollToTop'
 
 interface PageProps {
@@ -125,13 +127,58 @@ export default async function BlogPostDetail({ params }: PageProps) {
               <SeriesNavigation currentPost={post} allPosts={allPosts} />
             )}
 
+            {/* Sponsored Content - End of Post */}
+            <div className="mt-16 pt-12 border-t border-stone-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-zen-muted font-bold mb-6">
+                แนะนำสินค้า
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ProductRecommendation
+                  name="หมอนนั่งสมาธิ Zafu แบบดั้งเดิม"
+                  description="หมอนนั่งสมาธิคุณภาพสูง เหมาะสำหรับผู้ฝึกสมาธิทุกระดับ"
+                  price={890}
+                  originalPrice={1290}
+                  rating={5}
+                  imageUrl="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&h=400&fit=crop"
+                  affiliateLink="#"
+                  category="อุปกรณ์สมาธิ"
+                  inStock={true}
+                />
+                <ProductRecommendation
+                  name="ธูปหอม Mindfulness Collection"
+                  description="ธูปหอมธรรมชาติ กลิ่นสงบ เหมาะสำหรับการฝึกสมาธิ"
+                  price={350}
+                  rating={4}
+                  imageUrl="https://images.unsplash.com/photo-1598543535441-72ad7e9b6b41?w=400&h=400&fit=crop"
+                  affiliateLink="#"
+                  category="ธูปหอม"
+                  inStock={true}
+                />
+              </div>
+            </div>
+
             {/* Related Posts */}
             <RelatedPosts currentPost={post} allPosts={allPosts} />
           </article>
 
           {/* Sidebar */}
           <aside className="hidden lg:block w-1/4 relative">
-            <TableOfContents items={tocItems} />
+            {/* Table of Contents - Sticky (เลื่อนตาม) */}
+            <div className="sticky top-32">
+              <TableOfContents items={tocItems} />
+            </div>
+
+            {/* Ad Space - Static (ไม่เลื่อนตาม, อยู่ด้านล่าง) */}
+            <div className="mt-8 space-y-6">
+              <AdCard
+                title="หนังสือ: วิปัสสนาเบื้องต้น"
+                description="คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น เขียนโดยพระอาจารย์ชื่อดัง"
+                imageUrl="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&h=250&fit=crop"
+                ctaText="ซื้อเลย"
+                ctaLink="#"
+                type="affiliate"
+              />
+            </div>
           </aside>
 
         </div>
