@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
-import { TocItem } from '../types';
+import { TocItem } from '@/types';
 
 interface TableOfContentsProps {
   items: TocItem[];
@@ -38,8 +40,8 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
               href={`#${item.id}`}
               className={`block text-sm transition-all duration-300 font-light ${
                 activeId === item.id
-                  ? 'text-accent translate-x-1 font-normal'
-                  : 'text-neutral-500 hover:text-neutral-300'
+                  ? 'text-zen-accent translate-x-1 font-normal'
+                  : 'text-zen-muted hover:text-zen-text'
               }`}
               onClick={(e) => {
                 e.preventDefault();

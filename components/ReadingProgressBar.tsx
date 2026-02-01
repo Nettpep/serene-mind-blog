@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 
 const ReadingProgressBar: React.FC = () => {
@@ -23,7 +25,7 @@ const ReadingProgressBar: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 w-full h-1 z-[60] bg-transparent">
       <div 
-        className="h-full bg-accent shadow-[0_0_10px_rgba(212,175,55,0.5)] transition-all duration-100 ease-out"
+        className="h-full bg-zen-accent shadow-[0_0_10px_rgba(212,175,55,0.5)] transition-all duration-100 ease-out"
         style={{ width: `${width}%` }}
       />
     </div>

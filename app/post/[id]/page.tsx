@@ -1,45 +1,40 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
-import { BLOG_POSTS } from '../constants';
-import ReadingProgressBar from '../components/ReadingProgressBar';
-import TableOfContents from '../components/TableOfContents';
-import { TocItem } from '../types';
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
+import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
+import { getPostBySlug, getAllPostSlugs } from '@/lib/markdown'
+import { extractTocFromHtml } from '@/lib/toc'
+import { formatThaiDate } from '@/lib/date'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
+import TableOfContents from '@/components/TableOfContents'
+import ScrollToTop from './ScrollToTop'
 
-const BlogPostDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const post = BLOG_POSTS.find(p => p.id === id);
+interface PageProps {
+  params: Promise<{
+    id: string
+  }>
+}
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+export default async function BlogPostDetail({ params }: PageProps) {
+  const { id } = await params
+  const post = await getPostBySlug(id)
 
   if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zen-bg">
-        <div className="text-center">
-          <h2 className="text-2xl text-zen-text mb-4 font-serif">ไม่พบบทความ</h2>
-          <Link to="/" className="text-zen-accent hover:underline">กลับหน้าแรก</Link>
-        </div>
-      </div>
-    );
+    notFound()
   }
 
-  // Mock TOC extraction (in real app, parse from content)
-  const tocItems: TocItem[] = [
-    { id: 'meaning', text: 'ความหมายที่แท้จริง', level: 2 },
-    { id: 'psychology', text: 'ความสัมพันธ์กับจิตวิทยา', level: 2 },
-    { id: 'practice', text: 'การนำไปปฏิบัติ', level: 2 },
-  ];
+  // Extract TOC from HTML content
+  const tocItems = extractTocFromHtml(post.content)
 
   return (
     <>
+      <ScrollToTop />
       <ReadingProgressBar />
       
       <main className="pt-32 pb-20 min-h-screen relative bg-zen-bg">
         {/* Header Section */}
         <header className="container mx-auto px-6 mb-16 max-w-4xl text-center">
-           <Link to="/" className="inline-flex items-center text-zen-muted hover:text-zen-accent mb-10 transition-colors text-xs font-bold uppercase tracking-widest gap-2">
+           <Link href="/" className="inline-flex items-center text-zen-muted hover:text-zen-accent mb-10 transition-colors text-xs font-bold uppercase tracking-widest gap-2">
              <ArrowLeft size={14} /> กลับหน้าแรก
            </Link>
            
@@ -49,7 +44,7 @@ const BlogPostDetail: React.FC = () => {
 
            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-zen-text/60 font-medium py-4">
               <span className="flex items-center gap-2">
-                <Calendar size={16} className="text-zen-accent" /> {post.date}
+                <Calendar size={16} className="text-zen-accent" /> {formatThaiDate(post.date)}
               </span>
               <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
               <span className="flex items-center gap-2">
@@ -65,7 +60,13 @@ const BlogPostDetail: React.FC = () => {
         {/* Featured Image */}
         <div className="container mx-auto px-6 max-w-5xl mb-16">
           <div className="rounded-2xl overflow-hidden shadow-xl shadow-stone-200">
-              <img src={post.imageUrl} alt={post.title} className="w-full h-auto object-cover max-h-[600px]" />
+              <Image 
+                src={post.imageUrl} 
+                alt={post.title} 
+                width={1200}
+                height={600}
+                className="w-full h-auto object-cover max-h-[600px]" 
+              />
           </div>
         </div>
 
@@ -108,7 +109,12 @@ const BlogPostDetail: React.FC = () => {
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default BlogPostDetail;
+export async function generateStaticParams() {
+  const slugs = getAllPostSlugs()
+  return slugs.map((slug) => ({
+    id: slug,
+  }))
+}

@@ -1,9 +1,9 @@
-import React from 'react';
-import Hero from '../components/Hero';
-import BlogCard from '../components/BlogCard';
-import { BLOG_POSTS } from '../constants';
+import Hero from '@/components/Hero'
+import BlogCard from '@/components/BlogCard'
+import { getAllPosts } from '@/lib/markdown'
 
-const Home: React.FC = () => {
+export default async function Home() {
+  const posts = await getAllPosts()
   return (
     <>
       <Hero />
@@ -18,13 +18,11 @@ const Home: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
       </main>
     </>
-  );
-};
-
-export default Home;
+  )
+}
