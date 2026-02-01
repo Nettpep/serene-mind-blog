@@ -8,6 +8,12 @@ export interface BlogPost {
   imageUrl: string;
   category: string;
   tags: string[];
+  series?: {
+    id: string;
+    title: string;
+    order: number;
+    totalParts: number;
+  };
 }
 
 export interface TocItem {
