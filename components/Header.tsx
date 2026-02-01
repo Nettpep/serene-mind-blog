@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import Link from 'next/link';
+import SearchBarWrapper from './SearchBarWrapper';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,6 +54,11 @@ const Header: React.FC = () => {
               {link.name}
             </Link>
           ))}
+          
+          <div className="h-4 w-[1px] bg-gray-300"></div>
+
+          {/* Search Bar */}
+          <SearchBarWrapper />
           
           <div className="h-4 w-[1px] bg-gray-300"></div>
 

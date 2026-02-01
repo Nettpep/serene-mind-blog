@@ -14,7 +14,7 @@ export function getAllPostSlugs(): string[] {
   if (!fs.existsSync(postsDirectory)) {
     return []
   }
-  
+
   const fileNames = fs.readdirSync(postsDirectory)
   return fileNames
     .filter((name) => name.endsWith('.md'))
@@ -24,11 +24,11 @@ export function getAllPostSlugs(): string[] {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`)
-    
+
     if (!fs.existsSync(fullPath)) {
       return null
     }
-    
+
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 
@@ -47,9 +47,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       .use(rehypeSlug) // Auto-generate IDs (will be overridden if custom ID exists)
       .use(rehypeStringify)
       .process(cleanedContent)
-    
+
     let contentHtml = processedContent.toString()
-    
+
     // Replace auto-generated IDs with custom IDs if they exist
     headingIdMap.forEach((customId, headingText) => {
       // Find heading with this text and replace its ID
@@ -68,6 +68,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       imageUrl: data.imageUrl || '',
       category: data.category || '',
       tags: data.tags || [],
+      series: data.series ? {
+        id: data.series.id || '',
+        title: data.series.title || '',
+        order: data.series.order || 1,
+        totalParts: data.series.totalParts || 1,
+      } : undefined,
     }
   } catch (error) {
     console.error(`Error reading post ${slug}:`, error)
@@ -80,7 +86,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   const posts = await Promise.all(
     slugs.map((slug) => getPostBySlug(slug))
   )
-  
+
   // Filter out null posts and sort by date (newest first)
   return posts
     .filter((post): post is BlogPost => post !== null)
