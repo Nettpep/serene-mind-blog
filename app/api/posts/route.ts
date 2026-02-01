@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server'
 import { getAllPosts } from '@/lib/markdown'
+import type { Locale } from '@/i18n-config'
+import { i18n } from '@/i18n-config'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const posts = await getAllPosts()
+    // Get locale from query parameter or default to 'th'
+    const { searchParams } = new URL(request.url)
+    const localeParam = searchParams.get('locale')
+    const locale: Locale = 
+      localeParam && i18n.locales.includes(localeParam as Locale)
+        ? (localeParam as Locale)
+        : i18n.defaultLocale
+
+    const posts = await getAllPosts(locale)
     // Return only searchable fields (no HTML content)
     const searchablePosts = posts.map(post => ({
       id: post.id,
