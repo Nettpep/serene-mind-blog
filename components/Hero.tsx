@@ -22,9 +22,9 @@ const Hero: React.FC = () => {
           Mindfulness & Causality
         </span>
         
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-zen-text leading-[1.1] mb-8 animate-fade-in-up delay-100">
-          เมื่อสิ่งนี้มี... <br/>
-          <span className="italic text-zen-accent font-light">
+        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-zen-text leading-[1.3] mb-8 animate-fade-in-up delay-100">
+          <span className="block mb-2">เมื่อสิ่งนี้มี...</span>
+          <span className="block italic text-zen-accent font-light leading-[1.4]">
             สิ่งนี้ย่อมมี
           </span>
         </h1>

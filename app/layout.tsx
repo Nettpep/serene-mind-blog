@@ -4,7 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Idappaccayatā | จิตวิทยาและสมาธิ',
+  title: 'Serene Mind | จิตวิทยาและสมาธิ',
   description: 'พื้นที่แห่งความสงบและการเรียนรู้เรื่องจิตวิทยา สมาธิ และกฎอิทัปปัจจยตา',
   themeColor: '#FDFBF7',
 }

@@ -36,10 +36,10 @@ const Header: React.FC = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isScrolled ? 'bg-zen-accent text-white' : 'bg-white text-zen-accent shadow-md'}`}>
-             <span className="font-serif font-bold text-xl leading-none pt-1">I</span>
+             <span className="font-serif font-bold text-xl leading-none pt-1">S</span>
           </div>
           <span className={`font-serif text-lg tracking-widest font-bold transition-colors ${isScrolled ? 'text-zen-text' : 'text-zen-text'}`}>
-            IDAPPACCAYATĀ
+            SERENE MIND
           </span>
         </Link>
 

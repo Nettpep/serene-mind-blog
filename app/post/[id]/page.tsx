@@ -128,11 +128,21 @@ export default async function BlogPostDetail({ params }: PageProps) {
             )}
 
             {/* Sponsored Content - End of Post */}
-            <div className="mt-16 pt-12 border-t border-stone-200">
-              <h3 className="text-sm uppercase tracking-[0.3em] text-zen-muted font-bold mb-6">
-                แนะนำสินค้า
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="mt-20 pt-16 border-t-2 border-stone-100">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-zen-accent to-zen-accent" />
+                  <h3 className="text-lg font-serif text-zen-text font-bold">
+                    สินค้าแนะนำ
+                  </h3>
+                  <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-zen-accent to-zen-accent" />
+                </div>
+                <p className="text-sm text-zen-muted max-w-md mx-auto">
+                  สินค้าคุณภาพที่เราคัดสรรมาเพื่อช่วยส่งเสริมการฝึกสมาธิและการดำรงชีวิตอย่างมีสติ
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 <ProductRecommendation
                   name="หมอนนั่งสมาธิ Zafu แบบดั้งเดิม"
                   description="หมอนนั่งสมาธิคุณภาพสูง เหมาะสำหรับผู้ฝึกสมาธิทุกระดับ"
@@ -154,6 +164,33 @@ export default async function BlogPostDetail({ params }: PageProps) {
                   category="ธูปหอม"
                   inStock={true}
                 />
+                <ProductRecommendation
+                  name="หนังสือ: วิปัสสนาเบื้องต้น"
+                  description="คู่มือฝึกสมาธิและปัญญา สำหรับผู้เริ่มต้น"
+                  price={450}
+                  rating={5}
+                  imageUrl="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&h=400&fit=crop"
+                  affiliateLink="#"
+                  category="หนังสือ"
+                  inStock={true}
+                />
+                <ProductRecommendation
+                  name="ผ้าคลุมไหล่สำหรับสมาธิ"
+                  description="ผ้าคลุมไหล่เนื้อนุ่ม อบอุ่น เหมาะสำหรับการนั่งสมาธิ"
+                  price={590}
+                  rating={4}
+                  imageUrl="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=400&fit=crop"
+                  affiliateLink="#"
+                  category="อุปกรณ์สมาธิ"
+                  inStock={true}
+                />
+              </div>
+
+              {/* Trust Badge */}
+              <div className="mt-8 text-center">
+                <p className="text-xs text-zen-muted">
+                  ✓ คัดสรรโดยผู้เชี่ยวชาญ  •  ✓ คุณภาพรับรอง
+                </p>
               </div>
             </div>
 
