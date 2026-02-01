@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,7 +33,7 @@ const Header: React.FC = () => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isScrolled ? 'bg-zen-accent text-white' : 'bg-white text-zen-accent shadow-md'}`}>
              <span className="font-serif font-bold text-xl leading-none pt-1">I</span>
           </div>
@@ -45,7 +47,7 @@ const Header: React.FC = () => {
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
-              to={link.path}
+              href={link.path}
               className="text-sm font-medium text-zen-text/70 hover:text-zen-accent transition-colors duration-300"
             >
               {link.name}
@@ -80,7 +82,7 @@ const Header: React.FC = () => {
              {navLinks.map((link) => (
               <Link 
                 key={link.name} 
-                to={link.path}
+                href={link.path}
                 className="text-xl font-serif text-zen-text hover:text-zen-accent"
                 onClick={() => setMobileMenuOpen(false)}
               >
