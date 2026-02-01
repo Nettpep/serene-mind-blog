@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "categories": "Categories"
+  },
+  "hero": {
+    "title": "Serene Mind",
+    "subtitle": "Where Ancient Wisdom Meets Modern Technology"
+  },
+  "post": {
+    "readTime": "min read",
+    "read": "read",
+    "backToHome": "Back to Home",
+    "sharePost": "Share this post",
+    "tags": "Tags",
+    "relatedPosts": "Related Posts",
+    "recommendedProducts": "Recommended Products",
+    "qualityProducts": "Quality products we've curated to support your meditation practice and mindful living",
+    "expertSelected": "Expert Selected",
+    "qualityGuaranteed": "Quality Guaranteed"
+  },
+  "category": {
+    "all": "All",
+    "innerPeace": "Inner Peace",
+    "futureMind": "Future Mind",
+    "mindScience": "Mind Science",
+    "causalLife": "Causal Life",
+    "zenHealth": "Zen Health",
+    "mindfulRelationships": "Mindful Relationships"
+  },
+  "dailyQuote": {
+    "title": "Daily Dharma"
+  },
+  "share": {
+    "facebook": "Share on Facebook",
+    "twitter": "Share on X",
+    "line": "Share on Line",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "share": "Share"
+  },
+  "product": {
+    "viewProduct": "View Product",
+    "outOfStock": "Out of Stock",
+    "affiliateDisclaimer": "*Affiliate link, we earn commission"
+  },
+  "series": {
+    "part": "Part",
+    "of": "of",
+    "viewSeries": "View Series",
+    "previous": "Previous",
+    "next": "Next",
+    "inThisSeries": "In This Series"
+  },
+  "footer": {
+    "copyright": "All rights reserved"
+  }
+}

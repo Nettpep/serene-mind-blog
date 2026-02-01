@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "หน้าแรก",
+    "about": "เกี่ยวกับ",
+    "blog": "บทความ",
+    "categories": "หมวดหมู่"
+  },
+  "hero": {
+    "title": "Serene Mind",
+    "subtitle": "ธรรมะและเทคโนโลยี เพื่อจิตใจที่สงบ"
+  },
+  "post": {
+    "readTime": "นาที",
+    "read": "อ่าน",
+    "backToHome": "กลับหน้าแรก",
+    "sharePost": "แชร์บทความ",
+    "tags": "แท็ก",
+    "relatedPosts": "บทความที่เกี่ยวข้อง",
+    "recommendedProducts": "สินค้าแนะนำ",
+    "qualityProducts": "สินค้าคุณภาพที่เราคัดสรรมาเพื่อช่วยส่งเสริมการฝึกสมาธิและการดำรงชีวิตอย่างมีสติ",
+    "expertSelected": "คัดสรรโดยผู้เชี่ยวชาญ",
+    "qualityGuaranteed": "คุณภาพรับรอง"
+  },
+  "category": {
+    "all": "ทั้งหมด",
+    "innerPeace": "ความสงบภายใน",
+    "futureMind": "Future Mind",
+    "mindScience": "Mind Science",
+    "causalLife": "Causal Life",
+    "zenHealth": "Zen Health",
+    "mindfulRelationships": "ความสัมพันธ์อย่างมีสติ"
+  },
+  "dailyQuote": {
+    "title": "ธรรมะประจำวัน"
+  },
+  "share": {
+    "facebook": "แชร์ Facebook",
+    "twitter": "แชร์ X",
+    "line": "แชร์ Line",
+    "copyLink": "คัดลอกลิงก์",
+    "copied": "คัดลอกแล้ว!",
+    "share": "แชร์"
+  },
+  "product": {
+    "viewProduct": "ดูสินค้า",
+    "outOfStock": "สินค้าหมด",
+    "affiliateDisclaimer": "*ลิงก์พันธมิตร เราได้รับค่าคอมมิชชั่น"
+  },
+  "series": {
+    "part": "ตอนที่",
+    "of": "จาก",
+    "viewSeries": "ดูทั้งซีรีส์",
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป",
+    "inThisSeries": "ในซีรีส์นี้"
+  },
+  "footer": {
+    "copyright": "สงวนลิขสิทธิ์"
+  }
+}

@@ -7,23 +7,31 @@ import remarkRehype from 'remark-rehype'
 import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import { BlogPost } from '@/types'
+import type { Locale } from '@/i18n-config'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
-export function getAllPostSlugs(): string[] {
-  if (!fs.existsSync(postsDirectory)) {
+export function getAllPostSlugs(locale: Locale = 'th'): string[] {
+  const localeDirectory = locale === 'th' 
+    ? postsDirectory 
+    : path.join(postsDirectory, locale)
+  
+  if (!fs.existsSync(localeDirectory)) {
     return []
   }
 
-  const fileNames = fs.readdirSync(postsDirectory)
+  const fileNames = fs.readdirSync(localeDirectory)
   return fileNames
     .filter((name) => name.endsWith('.md'))
     .map((name) => name.replace(/\.md$/, ''))
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.md`)
+    const localeDirectory = locale === 'th' 
+      ? postsDirectory 
+      : path.join(postsDirectory, locale)
+    const fullPath = path.join(localeDirectory, `${slug}.md`)
 
     if (!fs.existsSync(fullPath)) {
       return null
@@ -81,10 +89,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   }
 }
 
-export async function getAllPosts(): Promise<BlogPost[]> {
-  const slugs = getAllPostSlugs()
+export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
+  const slugs = getAllPostSlugs(locale)
   const posts = await Promise.all(
-    slugs.map((slug) => getPostBySlug(slug))
+    slugs.map((slug) => getPostBySlug(slug, locale))
   )
 
   // Filter out null posts and sort by date (newest first)
