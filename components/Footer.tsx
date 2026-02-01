@@ -1,4 +1,5 @@
 import React from 'react';
+import AdSpace from './AdSpace';
 
 const Footer: React.FC = () => {
   return (
@@ -30,6 +31,11 @@ const Footer: React.FC = () => {
               </button>
             </form>
           </div>
+        </div>
+
+        {/* Footer Ad */}
+        <div className="mt-12 max-w-2xl mx-auto">
+          <AdSpace variant="footer" title="สินค้าแนะนำ" />
         </div>
 
         <div className="border-t border-stone-100 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zen-muted">

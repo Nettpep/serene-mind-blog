@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   const navLinks = [
     { name: 'หน้าแรก', path: '/' },
     { name: 'บทความ', path: '/' },
-    { name: 'เกี่ยวกับเรา', path: '/' },
+    { name: 'เกี่ยวกับเรา', path: '/about' },
   ];
 
   return (
