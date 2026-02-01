@@ -31,12 +31,10 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const { lang } = await params
   
   return (
-    <html lang={lang}>
-      <body className="min-h-screen bg-zen-bg text-zen-text font-sans selection:bg-zen-accent/20 selection:text-zen-accent">
-        <Header currentLang={lang} />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <>
+      <Header currentLang={lang} />
+      {children}
+      <Footer />
+    </>
   )
 }

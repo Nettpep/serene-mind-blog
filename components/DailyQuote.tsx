@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Sparkles } from 'lucide-react';
+import type { Locale } from '@/i18n-config';
 
 interface DharmaQuote {
     text: string;
@@ -9,7 +10,7 @@ interface DharmaQuote {
 }
 
 // Curated collection of Thai dharma quotes
-const DHARMA_QUOTES: DharmaQuote[] = [
+const DHARMA_QUOTES_TH: DharmaQuote[] = [
     { text: "เมื่อสิ่งนี้มี สิ่งนี้ย่อมมี เพราะความเกิดขึ้นแห่งสิ่งนี้ สิ่งนี้จึงเกิดขึ้น", author: "พระพุทธเจ้า" },
     { text: "จิตเป็นนายของกาย กายเป็นบ่าวของจิต ถ้าจิตไม่ตั้งใจ กายก็หมดค่า", author: "พระพุทธเจ้า" },
     { text: "ความทุกข์มิใช่สิ่งที่เกิดจากภายนอก แต่เกิดจากความยึดมั่นถือมั่นภายในจิตใจ" },
@@ -62,7 +63,70 @@ const DHARMA_QUOTES: DharmaQuote[] = [
     { text: "ผู้ฟังอย่างตั้งใจจะได้รับมากกว่าผู้พูด" },
 ];
 
-const DailyQuote: React.FC = () => {
+// Curated collection of English dharma quotes
+const DHARMA_QUOTES_EN: DharmaQuote[] = [
+    { text: "When this exists, that exists. Because this arises, that arises.", author: "The Buddha" },
+    { text: "The mind is master of the body. The body is servant of the mind. If the mind is not focused, the body is worthless.", author: "The Buddha" },
+    { text: "Suffering does not come from outside, but from attachment within the mind." },
+    { text: "Mindfulness is the light that reveals truth, not an escape from truth." },
+    { text: "Selfishness is the root of suffering. Caring for others is the root of happiness." },
+    { text: "Let go of the past. The future has not come. The present is all we have.", author: "The Buddha" },
+    { text: "Anger is a hot coal we hold to throw at others, but who gets burned?", author: "The Buddha" },
+    { text: "Each drop of water, when combined, fills the vessel. Small acts of goodness accumulated, fill life with abundance." },
+    { text: "Those who know contentment are content. Those who don't know contentment will never be content.", author: "Buddhist Teaching" },
+    { text: "Meditation is the stillness of mind. Wisdom is the clarity of mind." },
+    { text: "Don't underestimate small evils, thinking they won't harm. A forest fire starts from a small spark." },
+    { text: "Happiness is not in having much, but in wanting little." },
+    { text: "Suffering and happiness are just passing streams. Don't cling to anything." },
+    { text: "Forgiveness doesn't change the past, but it changes our future." },
+    { text: "What we think, we become. What we feel, we attract. What we imagine, we create.", author: "The Buddha" },
+    { text: "There is no path to happiness. Happiness is the path.", author: "The Buddha" },
+    { text: "Mindful speech is better than mindless silence." },
+    { text: "Today is a gift, that's why it's called the Present." },
+    { text: "Wisdom arises from seeing things as they truly are." },
+    { text: "True love must be free from attachment." },
+    { text: "Emptiness does not mean nothingness, but freedom from attachment." },
+    { text: "Those with stable mindfulness are like a stone pillar, unshaken by praise or blame.", author: "The Buddha" },
+    { text: "We cannot stop the waves, but we can learn to surf." },
+    { text: "Change is the nature of life. Clinging to the impermanent is suffering." },
+    { text: "Everything is a teacher. Every place is a classroom. Everyone is a fellow traveler." },
+    { text: "Calm the mind first, then you will see the way out." },
+    { text: "Don't believe anything just because others believe it. Prove it yourself.", author: "The Buddha" },
+    { text: "Vipassana is seeing things as they truly are, not as we want them to be." },
+    { text: "Letting go doesn't mean abandoning, but not clinging." },
+    { text: "Compassion for oneself is the beginning of compassion for others." },
+    { text: "Good causes, good results. Bad causes, bad results. Karma follows.", author: "Law of Karma" },
+    { text: "Practicing Dhamma is not about perfection, but about continuity." },
+    { text: "A calm mind is the greatest power." },
+    { text: "Suffering comes from desire. Happiness comes from contentment." },
+    { text: "The breath is the bridge between body and mind." },
+    { text: "Those who conquer themselves conquer all.", author: "The Buddha" },
+    { text: "Being present is the greatest gift." },
+    { text: "Dhamma is not in books, but in practice." },
+    { text: "Simplicity brings peace." },
+    { text: "The path to enlightenment is knowing oneself." },
+    { text: "True happiness does not come from outside, but from within." },
+    { text: "Practicing mindfulness is practicing being awake in life." },
+    { text: "Wisdom does not come from age, but from experience and reflection." },
+    { text: "A mind without compassion is like dry land." },
+    { text: "Patience is the power that destroys all obstacles." },
+    { text: "The wise speak little. Those who speak much often know little.", author: "Taoist Teaching" },
+    { text: "Every step is the journey, not the destination." },
+    { text: "Peace begins with accepting what is." },
+    { text: "The lotus grows in mud, just as wisdom arises from suffering." },
+    { text: "Those who listen attentively receive more than those who speak." },
+];
+
+interface DailyQuoteProps {
+    locale: Locale;
+    dictionary: {
+        dailyQuote: {
+            title: string;
+        };
+    };
+}
+
+const DailyQuote: React.FC<DailyQuoteProps> = ({ locale, dictionary }) => {
     const [quote, setQuote] = useState<DharmaQuote | null>(null);
 
     useEffect(() => {
@@ -73,9 +137,10 @@ const DailyQuote: React.FC = () => {
         const oneDay = 1000 * 60 * 60 * 24;
         const dayOfYear = Math.floor(diff / oneDay);
 
-        const quoteIndex = dayOfYear % DHARMA_QUOTES.length;
-        setQuote(DHARMA_QUOTES[quoteIndex]);
-    }, []);
+        const quotes = locale === 'th' ? DHARMA_QUOTES_TH : DHARMA_QUOTES_EN;
+        const quoteIndex = dayOfYear % quotes.length;
+        setQuote(quotes[quoteIndex]);
+    }, [locale]);
 
     if (!quote) return null;
 
@@ -94,7 +159,7 @@ const DailyQuote: React.FC = () => {
                     <div className="flex items-center gap-2.5 text-zen-accent">
                         <Sparkles size={20} strokeWidth={2.5} className="animate-pulse" />
                         <h3 className="text-xs uppercase tracking-[0.4em] font-bold">
-                            ธรรมะประจำวัน
+                            {dictionary.dailyQuote.title}
                         </h3>
                     </div>
                     <div className="w-10 h-[2px] bg-gradient-to-l from-transparent via-zen-accent to-zen-accent" />

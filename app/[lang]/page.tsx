@@ -19,11 +19,11 @@ export default async function Home({ params }: PageProps) {
   
   return (
     <>
-      <Hero />
+      <Hero locale={lang} dictionary={dictionary} />
 
       {/* Daily Dharma Quote */}
       <section className="container mx-auto px-6 py-16 relative z-10 -mt-20">
-        <DailyQuote />
+        <DailyQuote locale={lang} dictionary={dictionary} />
       </section>
 
       <main id="latest-posts" className="container mx-auto px-6 py-32 relative z-10">
@@ -40,7 +40,7 @@ export default async function Home({ params }: PageProps) {
           </p>
         </div>
 
-        <PostList initialPosts={posts} />
+        <PostList initialPosts={posts} locale={lang} dictionary={dictionary} />
 
         {/* Product Recommendations (หน้าแรก) */}
         <div className="mt-16 pt-12 border-t border-stone-200 max-w-6xl mx-auto">

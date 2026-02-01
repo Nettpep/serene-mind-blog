@@ -7,11 +7,15 @@
   },
   "hero": {
     "title": "Serene Mind",
-    "subtitle": "Where Ancient Wisdom Meets Modern Technology"
+    "subtitle": "Where Ancient Wisdom Meets Modern Technology",
+    "tagline": "Mindfulness & Causality",
+    "description": "Discover peace of mind through the laws of nature. Learn to be present and truly understand the origin of all feelings.",
+    "cta": "Start Reading Articles"
   },
   "post": {
     "readTime": "min read",
     "read": "read",
+    "readMore": "Read More",
     "backToHome": "Back to Home",
     "sharePost": "Share this post",
     "tags": "Tags",
@@ -54,7 +58,15 @@
     "next": "Next",
     "inThisSeries": "In This Series"
   },
+  "search": {
+    "placeholder": "Search posts...",
+    "startTyping": "Start typing to search posts...",
+    "found": "Found",
+    "posts": "posts",
+    "noPosts": "No posts found in this category"
+  },
   "footer": {
-    "copyright": "All rights reserved"
+    "copyright": "All rights reserved",
+    "newsletterDescription": "Get mindfulness articles and inspiration delivered to your inbox"
   }
 }
