@@ -1,4 +1,4 @@
-# Idappaccayatā Blog
+# Serene Mind Blog
 
 บล็อกที่เน้นเรื่องจิตวิทยา สมาธิ และกฎอิทัปปัจจยตา สร้างด้วย Next.js
 

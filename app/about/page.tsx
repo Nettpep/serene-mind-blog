@@ -29,7 +29,7 @@ export default function AboutPage() {
               ภารกิจของเรา
             </h2>
             <p className="text-zen-text/80 text-lg leading-[1.8] mb-6 font-light">
-              <strong className="font-medium text-zen-text">Idappaccayatā</strong> เป็นพื้นที่สำหรับการตื่นรู้ 
+              <strong className="font-medium text-zen-text">Serene Mind</strong> เป็นพื้นที่สำหรับการตื่นรู้ 
               เข้าใจตนเอง และเข้าใจโลกผ่านมุมมองของจิตวิทยาและพุทธธรรม
             </p>
             <p className="text-zen-text/80 text-lg leading-[1.8] font-light">
@@ -132,7 +132,7 @@ export default function AboutPage() {
               มีคำถามหรือข้อเสนอแนะ? เรายินดีรับฟัง
             </p>
             <p className="text-zen-text/60 font-light">
-              อีเมล: <a href="mailto:contact@idappaccayata.com" className="text-zen-accent hover:underline">contact@idappaccayata.com</a>
+              อีเมล: <a href="mailto:contact@serenemind.com" className="text-zen-accent hover:underline">contact@serenemind.com</a>
             </p>
           </div>
         </section>

@@ -1,5 +1,4 @@
 import React from 'react';
-import AdSpace from './AdSpace';
 
 const Footer: React.FC = () => {
   return (
@@ -9,7 +8,7 @@ const Footer: React.FC = () => {
           
           {/* Brand */}
           <div className="max-w-sm">
-            <h4 className="font-serif text-2xl text-zen-text mb-6 font-bold tracking-wide">IDAPPACCAYATĀ</h4>
+            <h4 className="font-serif text-2xl text-zen-text mb-6 font-bold tracking-wide">SERENE MIND</h4>
             <p className="text-zen-text/60 text-sm font-light leading-relaxed mb-6">
               พื้นที่สำหรับการตื่นรู้ เข้าใจตนเอง และเข้าใจโลกผ่านมุมมองของจิตวิทยาและพุทธธรรม 
               เราเชื่อว่า "ความสงบ" เริ่มต้นจากการเข้าใจเหตุและผล
@@ -33,13 +32,8 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer Ad */}
-        <div className="mt-12 max-w-2xl mx-auto">
-          <AdSpace variant="footer" title="สินค้าแนะนำ" />
-        </div>
-
         <div className="border-t border-stone-100 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zen-muted">
-          <p>&copy; {new Date().getFullYear()} Idappaccayatā Blog. สงวนลิขสิทธิ์</p>
+          <p>&copy; {new Date().getFullYear()} Serene Mind Blog. สงวนลิขสิทธิ์</p>
           <div className="flex gap-8 mt-4 md:mt-0 font-medium">
             <a href="#" className="hover:text-zen-accent transition-colors">นโยบายความเป็นส่วนตัว</a>
             <a href="#" className="hover:text-zen-accent transition-colors">ข้อกำหนดการใช้งาน</a>
