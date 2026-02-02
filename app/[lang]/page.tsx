@@ -7,6 +7,7 @@ import ProductRecommendation from '@/components/ProductRecommendation'
 import { getAllPostsCached } from '@/lib/markdown'
 import { getDictionary } from '@/lib/get-dictionary'
 import { getPostsByCategory } from '@/lib/categories'
+import { SHOW_PRODUCT_ADS } from '@/lib/site-config'
 import type { Locale } from '@/i18n-config'
 
 interface PageProps {
@@ -72,7 +73,8 @@ export default async function Home({ params, searchParams }: PageProps) {
           <PostList posts={posts} locale={lang} dictionary={dictionary} />
         </Suspense>
 
-        {/* Product Recommendations (หน้าแรก) */}
+        {/* Product Recommendations (หน้าแรก) - แสดงเมื่อ NEXT_PUBLIC_SHOW_PRODUCT_ADS=true */}
+        {SHOW_PRODUCT_ADS && (
         <div className="mt-16 pt-12 border-t border-stone-200 max-w-6xl mx-auto">
           <h3 className="text-sm uppercase tracking-[0.3em] text-zen-muted font-bold mb-6 text-center">
             {dictionary.post.recommendedProducts}
@@ -148,6 +150,7 @@ export default async function Home({ params, searchParams }: PageProps) {
             </p>
           </div>
         </div>
+        )}
       </main>
     </>
   )

@@ -6,6 +6,7 @@ import { getPostBySlug, getAllPostSlugs, getAllPostsCached } from '@/lib/markdow
 import { extractTocFromHtml } from '@/lib/toc'
 import { formatDate } from '@/lib/date'
 import { getDictionary } from '@/lib/get-dictionary'
+import { SHOW_PRODUCT_ADS } from '@/lib/site-config'
 import type { Locale } from '@/i18n-config'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import TableOfContents from '@/components/TableOfContents'
@@ -131,7 +132,8 @@ export default async function BlogPostDetail({ params }: PageProps) {
               <SeriesNavigation currentPost={post} allPosts={allPosts} locale={lang} dictionary={dictionary} />
             )}
 
-            {/* Sponsored Content - End of Post */}
+            {/* Sponsored Content - End of Post (แสดงเมื่อ NEXT_PUBLIC_SHOW_PRODUCT_ADS=true) */}
+            {SHOW_PRODUCT_ADS && (
             <div className="mt-20 pt-16 border-t-2 border-stone-100">
               <div className="text-center mb-10">
                 <div className="inline-flex items-center gap-3 mb-4">
@@ -217,6 +219,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
                 </p>
               </div>
             </div>
+            )}
 
             {/* Related Posts */}
             <RelatedPosts currentPost={post} allPosts={allPosts} />
@@ -229,7 +232,8 @@ export default async function BlogPostDetail({ params }: PageProps) {
               <TableOfContents items={tocItems} />
             </div>
 
-            {/* Ad Space - Static (ไม่เลื่อนตาม, อยู่ด้านล่าง) */}
+            {/* Ad Space - แสดงเมื่อ NEXT_PUBLIC_SHOW_PRODUCT_ADS=true */}
+            {SHOW_PRODUCT_ADS && (
             <div className="mt-8 space-y-6">
               <AdCard
                 title={lang === 'th' ? 'หนังสือ: วิปัสสนาเบื้องต้น' : 'Book: Introduction to Vipassana'}
@@ -243,6 +247,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
                 type="affiliate"
               />
             </div>
+            )}
           </aside>
 
         </div>
