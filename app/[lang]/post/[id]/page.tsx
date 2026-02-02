@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
 import { getPostBySlug, getAllPostSlugs, getAllPosts } from '@/lib/markdown'
 import { extractTocFromHtml } from '@/lib/toc'
-import { formatThaiDate } from '@/lib/date'
+import { formatDate } from '@/lib/date'
 import { getDictionary } from '@/lib/get-dictionary'
 import type { Locale } from '@/i18n-config'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
@@ -56,7 +56,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
 
           <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-zen-text/60 font-medium py-4">
             <span className="flex items-center gap-2">
-              <Calendar size={16} className="text-zen-accent" /> {formatThaiDate(post.date)}
+              <Calendar size={16} className="text-zen-accent" /> {formatDate(post.date, lang)}
             </span>
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
             <span className="flex items-center gap-2">
@@ -90,7 +90,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
 
             {/* Series Navigation - Top */}
             {post.series && (
-              <SeriesNavigation currentPost={post} allPosts={allPosts} />
+              <SeriesNavigation currentPost={post} allPosts={allPosts} locale={lang} dictionary={dictionary} />
             )}
 
             {/* Typography Content */}
@@ -128,7 +128,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
 
             {/* Series Navigation - Bottom */}
             {post.series && (
-              <SeriesNavigation currentPost={post} allPosts={allPosts} />
+              <SeriesNavigation currentPost={post} allPosts={allPosts} locale={lang} dictionary={dictionary} />
             )}
 
             {/* Sponsored Content - End of Post */}

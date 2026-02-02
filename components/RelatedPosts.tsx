@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import { BlogPost } from '@/types';
-import { formatThaiDate } from '@/lib/date';
+import { formatDate } from '@/lib/date';
 import { useDictionary } from '@/lib/use-dictionary';
 
 interface RelatedPostsProps {
@@ -105,7 +105,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ currentPost, allPosts, maxP
                             {/* Date */}
                             <div className="flex items-center gap-2 text-xs text-zen-text/60">
                                 <Calendar size={14} />
-                                <span>{formatThaiDate(post.date)}</span>
+                                <span>{formatDate(post.date, lang)}</span>
                             </div>
                         </div>
                     </Link>

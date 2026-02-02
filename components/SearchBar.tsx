@@ -171,8 +171,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
                         </p>
                         <div className="flex items-center gap-3 mt-2 text-xs text-zen-muted">
                           <span>{post.category}</span>
-                          <span>•</span>
-                          <span>{post.readTime}</span>
                         </div>
                       </div>
                     </Link>

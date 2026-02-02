@@ -56,7 +56,15 @@
     "viewSeries": "View Series",
     "previous": "Previous",
     "next": "Next",
-    "inThisSeries": "In This Series"
+    "inThisSeries": "In This Series",
+    "noPrevious": "No previous episode",
+    "seriesComplete": "Series Complete 🎉",
+    "viewAllEpisodes": "View all episodes in this series",
+    "episodes": "episodes",
+    "currentlyReading": "(Currently reading)",
+    "series": "Series",
+    "previousEpisode": "Previous Episode",
+    "nextEpisode": "Next Episode"
   },
   "search": {
     "placeholder": "Search posts...",
