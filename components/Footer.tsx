@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import type { Locale } from '@/i18n-config';
 
 interface FooterProps {
@@ -52,11 +53,27 @@ const Footer: React.FC<FooterProps> = ({ locale, dictionary }) => {
         </div>
 
         <div className="border-t border-stone-100 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zen-muted">
-          <p>&copy; {new Date().getFullYear()} Serene Mind Blog. {dictionary.footer.copyright}</p>
+          <p>
+            &copy; {new Date().getFullYear()} Serene Mind Blog. {dictionary.footer.copyright}{' '}
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-zen-accent transition-colors font-medium"
+            >
+              CC BY 4.0
+            </a>
+          </p>
           <div className="flex gap-8 mt-4 md:mt-0 font-medium">
-            <a href="#" className="hover:text-zen-accent transition-colors">{dictionary.footer.privacyPolicy}</a>
-            <a href="#" className="hover:text-zen-accent transition-colors">{dictionary.footer.termsOfService}</a>
-            <a href="#" className="hover:text-zen-accent transition-colors">{dictionary.footer.contactUs}</a>
+            <Link href={`/${locale}/privacy-policy`} className="hover:text-zen-accent transition-colors">
+              {dictionary.footer.privacyPolicy}
+            </Link>
+            <Link href={`/${locale}/terms-of-service`} className="hover:text-zen-accent transition-colors">
+              {dictionary.footer.termsOfService}
+            </Link>
+            <Link href={`/${locale}/contact`} className="hover:text-zen-accent transition-colors">
+              {dictionary.footer.contactUs}
+            </Link>
           </div>
         </div>
       </div>
