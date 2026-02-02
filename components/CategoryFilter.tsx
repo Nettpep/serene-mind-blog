@@ -1,49 +1,53 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import { getAllCategories } from '@/lib/categories';
 import { BlogPost } from '@/types';
+import type { Locale } from '@/i18n-config';
 
 interface CategoryFilterProps {
-    posts: BlogPost[];
-    onFilterChange: (category: string | null) => void;
+  posts: BlogPost[];
+  locale: Locale;
+  currentCategory: string | null;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ posts, onFilterChange }) => {
-    const [activeCategory, setActiveCategory] = useState<string | null>(null);
-    const categories = getAllCategories(posts);
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  posts,
+  locale,
+  currentCategory,
+}) => {
+  const categories = getAllCategories(posts);
+  const allLabel = locale === 'th' ? 'ทั้งหมด' : 'All';
 
-    const handleCategoryClick = (category: string | null) => {
-        setActiveCategory(category);
-        onFilterChange(category);
-    };
+  return (
+    <div className="flex flex-wrap gap-3 justify-center mb-16">
+      <Link
+        href={`/${locale}`}
+        className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
+          currentCategory === null
+            ? 'bg-zen-accent text-white shadow-md'
+            : 'bg-white text-zen-text border border-stone-200 hover:border-zen-accent hover:text-zen-accent'
+        }`}
+      >
+        {allLabel}
+      </Link>
 
-    return (
-        <div className="flex flex-wrap gap-3 justify-center mb-16">
-            <button
-                onClick={() => handleCategoryClick(null)}
-                className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${activeCategory === null
-                        ? 'bg-zen-accent text-white shadow-md'
-                        : 'bg-white text-zen-text border border-stone-200 hover:border-zen-accent hover:text-zen-accent'
-                    }`}
-            >
-                ทั้งหมด
-            </button>
-
-            {categories.map(category => (
-                <button
-                    key={category}
-                    onClick={() => handleCategoryClick(category)}
-                    className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${activeCategory === category
-                            ? 'bg-zen-accent text-white shadow-md'
-                            : 'bg-white text-zen-text border border-stone-200 hover:border-zen-accent hover:text-zen-accent'
-                        }`}
-                >
-                    {category}
-                </button>
-            ))}
-        </div>
-    );
+      {categories.map((category) => (
+        <Link
+          key={category}
+          href={`/${locale}?category=${encodeURIComponent(category)}`}
+          className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
+            currentCategory === category
+              ? 'bg-zen-accent text-white shadow-md'
+              : 'bg-white text-zen-text border border-stone-200 hover:border-zen-accent hover:text-zen-accent'
+          }`}
+        >
+          {category}
+        </Link>
+      ))}
+    </div>
+  );
 };
 
 export default CategoryFilter;

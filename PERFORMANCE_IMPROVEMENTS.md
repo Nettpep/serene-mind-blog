@@ -54,76 +54,39 @@
 
 ---
 
-## 🔄 Phase 2: Major Refactor (แนะนำทำต่อ)
+## ✅ Phase 2: Major Refactor (เสร็จแล้ว)
 
-### 4. ย้าย PostList Filtering → URL Params (Server-side)
-**ปัญหาปัจจุบัน:**
-- PostList เป็น Client Component
-- Filter category ใน client state → re-render ทั้งหน้า
+### 4. ย้าย PostList Filtering → URL Params (Server-side) ✅
+**ทำแล้ว:**
+- `app/[lang]/page.tsx` รับ `searchParams.category` และ filter ด้วย `getPostsByCategory` บน server
+- `CategoryFilter` ใช้ `<Link href={/${locale}?category=...}>` แทน onClick → เปลี่ยน category = เปลี่ยน URL
+- `PostList` เป็น Server Component รับ `posts` ที่ filter แล้ว ไม่มี useState
 
-**แก้ไข:**
-```tsx
-// URL: /?category=innerPeace
-export default async function Home({ searchParams }) {
-  const category = searchParams.category
-  const posts = category 
-    ? getPostsByCategory(allPosts, category)
-    : allPosts
-  
-  return <PostList posts={posts} /> // Server Component
-}
-```
-
-**ผลกระทบ:**
-- ✅ PostList → Server Component
-- ✅ Filtering เร็วขึ้น (server-side)
-- ✅ SEO-friendly URLs
-- ✅ ลด JavaScript อีก ~20KB
+**ผลลัพธ์:**
+- ✅ PostList → Server Component (ลด JS ~20KB)
+- ✅ Filtering บน server เร็วขึ้น
+- ✅ URL แชร์ได้ เช่น `/th?category=ความสงบภายใน`
 
 ---
 
-### 5. Optimize Header Scroll Listener
-**ปัญหา:** `useEffect` + `scroll` event ทำงานบ่อยเกินไป
-
-**แก้ไข:**
-```tsx
-// Throttle scroll event
-const handleScroll = useCallback(
-  throttle(() => {
-    setIsScrolled(window.scrollY > 20)
-  }, 100),
-  []
-)
-```
-
-หรือใช้ Intersection Observer แทน
+### 5. Optimize Header Scroll Listener ✅
+**ทำแล้ว:**
+- ใช้ `throttle(..., 100)` + `requestAnimationFrame` เพื่อลดการอัปเดต state
+- ใช้ `{ passive: true }` กับ scroll listener
 
 ---
 
-### 6. Dynamic Import SearchBar
-**ปัญหา:** Fuse.js (~50KB) โหลดแม้ไม่ได้เปิด search
-
-**แก้ไข:**
-```tsx
-const SearchBarWrapper = dynamic(
-  () => import('./SearchBar'),
-  { ssr: false }
-)
-```
+### 6. Dynamic Import SearchBar ✅
+**ทำแล้ว:**
+- ใน `Header.tsx` ใช้ `dynamic(() => import('./SearchBarWrapper'), { ssr: false })`
+- Fuse.js โหลดเมื่อเปิด search เท่านั้น
 
 ---
 
-### 7. เพิ่ม Suspense Boundaries
-**แก้ไข:**
-```tsx
-<Suspense fallback={<PostListSkeleton />}>
-  <PostList />
-</Suspense>
-
-<Suspense fallback={<QuoteSkeleton />}>
-  <DailyQuote />
-</Suspense>
-```
+### 7. เพิ่ม Suspense Boundaries ✅
+**ทำแล้ว:**
+- `DailyQuote` ห่อด้วย `<Suspense fallback={...}>`
+- `PostList` ห่อด้วย `<Suspense fallback={grid skeleton}>`
 
 ---
 
