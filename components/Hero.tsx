@@ -1,7 +1,6 @@
-'use client'
-
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import Image from 'next/image';
+import HeroScrollButton from './HeroScrollButton';
 import type { Locale } from '@/i18n-config';
 
 interface HeroProps {
@@ -22,10 +21,13 @@ const Hero: React.FC<HeroProps> = ({ locale, dictionary }) => {
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image with Soft Overlay */}
       <div className="absolute inset-0 z-0">
-         <img 
+         <Image 
             src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop" 
             alt="Zen Nature" 
-            className="w-full h-full object-cover opacity-90"
+            fill
+            priority
+            className="object-cover opacity-90"
+            sizes="100vw"
          />
          {/* Gradient Overlay for text readability and warmth */}
          <div className="absolute inset-0 bg-gradient-to-b from-zen-bg/80 via-zen-bg/60 to-zen-bg"></div>
@@ -59,15 +61,7 @@ const Hero: React.FC<HeroProps> = ({ locale, dictionary }) => {
         </p>
 
         <div className="animate-fade-in-up delay-300">
-          <button 
-            onClick={() => document.getElementById('latest-posts')?.scrollIntoView({ behavior: 'smooth' })} 
-            className="group flex flex-col items-center gap-3 text-zen-muted hover:text-zen-accent transition-colors duration-500 cursor-pointer mx-auto"
-          >
-             <span className="text-sm tracking-widest uppercase">{dictionary.hero.cta}</span>
-             <div className="w-10 h-10 rounded-full border border-zen-muted/30 group-hover:border-zen-accent flex items-center justify-center transition-all">
-               <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
-             </div>
-          </button>
+          <HeroScrollButton text={dictionary.hero.cta} />
         </div>
       </div>
     </section>

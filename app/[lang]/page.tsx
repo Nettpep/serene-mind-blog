@@ -1,29 +1,37 @@
+import { Suspense } from 'react'
 import Hero from '@/components/Hero'
 import DailyQuote from '@/components/DailyQuote'
 import PostList from '@/components/PostList'
+import CategoryFilter from '@/components/CategoryFilter'
 import ProductRecommendation from '@/components/ProductRecommendation'
-import { getAllPosts } from '@/lib/markdown'
+import { getAllPostsCached } from '@/lib/markdown'
 import { getDictionary } from '@/lib/get-dictionary'
+import { getPostsByCategory } from '@/lib/categories'
 import type { Locale } from '@/i18n-config'
 
 interface PageProps {
-  params: Promise<{
-    lang: Locale
-  }>
+  params: Promise<{ lang: Locale }>
+  searchParams: Promise<{ category?: string }>
 }
 
-export default async function Home({ params }: PageProps) {
+export default async function Home({ params, searchParams }: PageProps) {
   const { lang } = await params
+  const { category: categoryParam } = await searchParams
   const dictionary = await getDictionary(lang)
-  const posts = await getAllPosts(lang)
-  
+  const allPosts = await getAllPostsCached(lang)
+  const posts = categoryParam
+    ? getPostsByCategory(allPosts, categoryParam)
+    : allPosts
+
   return (
     <>
       <Hero locale={lang} dictionary={dictionary} />
 
       {/* Daily Dharma Quote */}
       <section className="container mx-auto px-6 py-16 relative z-10 -mt-20">
-        <DailyQuote locale={lang} dictionary={dictionary} />
+        <Suspense fallback={<div className="h-32 bg-stone-100 rounded-2xl animate-pulse" />}>
+          <DailyQuote locale={lang} dictionary={dictionary} />
+        </Suspense>
       </section>
 
       <main id="latest-posts" className="container mx-auto px-6 py-32 relative z-10">
@@ -40,7 +48,29 @@ export default async function Home({ params }: PageProps) {
           </p>
         </div>
 
-        <PostList initialPosts={posts} locale={lang} dictionary={dictionary} />
+        <div className="mb-16">
+          <CategoryFilter
+            posts={allPosts}
+            locale={lang}
+            currentCategory={categoryParam ?? null}
+          />
+        </div>
+        <Suspense fallback={
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
+                <div className="aspect-[16/10] bg-stone-200" />
+                <div className="p-8 space-y-4">
+                  <div className="h-4 w-32 bg-stone-200 rounded" />
+                  <div className="h-8 bg-stone-200 rounded" />
+                  <div className="h-3 bg-stone-200 rounded w-5/6" />
+                </div>
+              </div>
+            ))}
+          </div>
+        }>
+          <PostList posts={posts} locale={lang} dictionary={dictionary} />
+        </Suspense>
 
         {/* Product Recommendations (หน้าแรก) */}
         <div className="mt-16 pt-12 border-t border-stone-200 max-w-6xl mx-auto">

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react';
 import type { Locale } from '@/i18n-config';
 

@@ -1,12 +1,32 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import SearchBarWrapper from './SearchBarWrapper';
 import LanguageSwitcher from './LanguageSwitcher';
 import type { Locale } from '@/i18n-config';
+
+const SearchBarWrapper = dynamic(() => import('./SearchBarWrapper'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-9 h-9 rounded-lg bg-stone-100 animate-pulse" aria-hidden />
+  ),
+});
+
+const THROTTLE_MS = 100;
+
+function throttle<T extends (...args: unknown[]) => void>(fn: T, delay: number): T {
+  let last = 0;
+  return ((...args: Parameters<T>) => {
+    const now = Date.now();
+    if (now - last >= delay) {
+      last = now;
+      fn(...args);
+    }
+  }) as T;
+}
 
 interface HeaderProps {
   currentLang: Locale;
@@ -17,13 +37,23 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const pathname = usePathname();
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const updateScrolled = throttle(() => {
       setIsScrolled(window.scrollY > 20);
+    }, THROTTLE_MS);
+
+    const handleScroll = () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => updateScrolled());
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   // Extract lang from pathname with safety check
@@ -49,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href={`/${lang}`} className="flex items-center gap-3 group">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isScrolled ? 'bg-zen-accent text-white' : 'bg-white text-zen-accent shadow-md'}`}>
              <span className="font-serif font-bold text-xl leading-none pt-1">S</span>
           </div>

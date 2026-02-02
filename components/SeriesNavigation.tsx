@@ -4,13 +4,29 @@ import React from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { BlogPost } from '@/types';
+import type { Locale } from '@/i18n-config';
 
 interface SeriesNavigationProps {
     currentPost: BlogPost;
     allPosts: BlogPost[];
+    locale: Locale;
+    dictionary: {
+        series: {
+            part: string;
+            of: string;
+            series: string;
+            previousEpisode: string;
+            nextEpisode: string;
+            noPrevious: string;
+            seriesComplete: string;
+            viewAllEpisodes: string;
+            episodes: string;
+            currentlyReading: string;
+        };
+    };
 }
 
-const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPosts }) => {
+const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPosts, locale, dictionary }) => {
     if (!currentPost.series) return null;
 
     // Find all posts in this series
@@ -31,13 +47,13 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                 <BookOpen className="text-zen-accent mt-1 flex-shrink-0" size={24} />
                 <div className="flex-1">
                     <p className="text-xs uppercase tracking-[0.2em] text-zen-accent font-bold mb-2">
-                        Series
+                        {dictionary.series.series}
                     </p>
                     <h3 className="text-xl font-serif text-zen-text mb-2">
                         {series.title}
                     </h3>
                     <p className="text-sm text-zen-muted">
-                        ตอนที่ {series.order} จาก {series.totalParts} ตอน
+                        {dictionary.series.part} {series.order} {dictionary.series.of} {series.totalParts} {dictionary.series.episodes}
                     </p>
                 </div>
 
@@ -60,12 +76,12 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                 {/* Previous Button */}
                 {previousPost ? (
                     <Link
-                        href={`/post/${previousPost.id}`}
+                        href={`/${locale}/post/${previousPost.id}`}
                         className="group flex items-center gap-4 p-4 bg-white hover:bg-zen-accent/5 border border-stone-200 hover:border-zen-accent/40 rounded-xl transition-all duration-300"
                     >
                         <ChevronLeft className="text-zen-accent flex-shrink-0 group-hover:-translate-x-1 transition-transform" size={20} />
                         <div className="flex-1 text-left">
-                            <p className="text-xs text-zen-muted mb-1">ตอนก่อนหน้า</p>
+                            <p className="text-xs text-zen-muted mb-1">{dictionary.series.previousEpisode}</p>
                             <p className="text-sm text-zen-text font-medium line-clamp-2 group-hover:text-zen-accent transition-colors">
                                 {previousPost.title}
                             </p>
@@ -73,18 +89,18 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                     </Link>
                 ) : (
                     <div className="p-4 bg-gray-50 border border-stone-200 rounded-xl opacity-40">
-                        <p className="text-xs text-zen-muted text-center">ไม่มีตอนก่อนหน้า</p>
+                        <p className="text-xs text-zen-muted text-center">{dictionary.series.noPrevious}</p>
                     </div>
                 )}
 
                 {/* Next Button */}
                 {nextPost ? (
                     <Link
-                        href={`/post/${nextPost.id}`}
+                        href={`/${locale}/post/${nextPost.id}`}
                         className="group flex items-center gap-4 p-4 bg-white hover:bg-zen-accent/5 border border-stone-200 hover:border-zen-accent/40 rounded-xl transition-all duration-300"
                     >
                         <div className="flex-1 text-right">
-                            <p className="text-xs text-zen-muted mb-1">ตอนถัดไป</p>
+                            <p className="text-xs text-zen-muted mb-1">{dictionary.series.nextEpisode}</p>
                             <p className="text-sm text-zen-text font-medium line-clamp-2 group-hover:text-zen-accent transition-colors">
                                 {nextPost.title}
                             </p>
@@ -93,7 +109,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                     </Link>
                 ) : (
                     <div className="p-4 bg-gray-50 border border-stone-200 rounded-xl opacity-40">
-                        <p className="text-xs text-zen-muted text-center">จบ Series แล้ว 🎉</p>
+                        <p className="text-xs text-zen-muted text-center">{dictionary.series.seriesComplete}</p>
                     </div>
                 )}
             </div>
@@ -103,22 +119,22 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                 <details className="mt-6 pt-6 border-t border-zen-accent/20">
                     <summary className="cursor-pointer text-sm text-zen-accent hover:text-zen-accent/80 font-medium flex items-center gap-2 transition-colors">
                         <BookOpen size={16} />
-                        ดูทุกตอนใน Series นี้ ({seriesPosts.length} ตอน)
+                        {dictionary.series.viewAllEpisodes} ({seriesPosts.length} {dictionary.series.episodes})
                     </summary>
                     <ul className="mt-4 space-y-2">
                         {seriesPosts.map((post) => (
                             <li key={post.id}>
                                 <Link
-                                    href={`/post/${post.id}`}
+                                    href={`/${locale}/post/${post.id}`}
                                     className={`block p-3 rounded-lg transition-all ${post.id === currentPost.id
                                             ? 'bg-zen-accent/10 border border-zen-accent/30 text-zen-accent font-medium'
                                             : 'bg-white hover:bg-zen-accent/5 border border-stone-200 hover:border-zen-accent/20 text-zen-text hover:text-zen-accent'
                                         }`}
                                 >
-                                    <span className="text-xs text-zen-muted mr-2">ตอนที่ {post.series?.order}</span>
+                                    <span className="text-xs text-zen-muted mr-2">{dictionary.series.part} {post.series?.order}</span>
                                     <span className="text-sm">{post.title}</span>
                                     {post.id === currentPost.id && (
-                                        <span className="ml-2 text-xs text-zen-accent">(กำลังอ่านอยู่)</span>
+                                        <span className="ml-2 text-xs text-zen-accent">{dictionary.series.currentlyReading}</span>
                                     )}
                                 </Link>
                             </li>

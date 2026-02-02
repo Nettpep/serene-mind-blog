@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BlogPost } from '@/types';
 import { ArrowRight } from 'lucide-react';
-import { formatThaiDate } from '@/lib/date';
+import { formatDate } from '@/lib/date';
 import type { Locale } from '@/i18n-config';
 
 interface BlogCardProps {
@@ -39,9 +39,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, locale, dictionary }) => {
         {/* Content */}
         <div className="p-8 flex flex-col flex-grow">
           <div className="flex items-center gap-3 text-xs text-zen-muted mb-4 font-medium uppercase tracking-wider">
-            <span>{formatThaiDate(post.date)}</span>
-            <span className="w-1 h-1 bg-zen-muted/50 rounded-full"></span>
-            <span>{post.readTime} {dictionary.post.read}</span>
+            <span>{formatDate(post.date, locale)}</span>
           </div>
 
           <h3 className="font-serif text-2xl text-zen-text mb-4 group-hover:text-zen-accent transition-colors leading-tight">

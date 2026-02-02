@@ -1,8 +1,7 @@
-'use client'
-
 import React from 'react';
 import Image from 'next/image';
-import { ExternalLink, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
+import ProductButton from './ProductButton';
 import type { Locale } from '@/i18n-config';
 
 interface ProductRecommendationProps {
@@ -119,22 +118,12 @@ const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
                 </div>
 
                 {/* CTA */}
-                <a
-                    href={affiliateLink}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    className={`w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-300 text-sm font-medium ${inStock
-                        ? 'bg-zen-accent hover:bg-zen-accent/90 text-white shadow-sm hover:shadow-md'
-                        : 'bg-stone-200 text-stone-500 cursor-not-allowed'
-                        }`}
-                    onClick={(e) => !inStock && e.preventDefault()}
-                >
-                    {inStock 
-                        ? (dictionary?.product.viewProduct || (locale === 'th' ? 'ดูสินค้า' : 'View Product'))
-                        : (dictionary?.product.outOfStock || (locale === 'th' ? 'สินค้าหมด' : 'Out of Stock'))
-                    }
-                    {inStock && <ExternalLink size={14} />}
-                </a>
+                <ProductButton
+                    affiliateLink={affiliateLink}
+                    inStock={inStock}
+                    viewProductText={dictionary?.product.viewProduct || (locale === 'th' ? 'ดูสินค้า' : 'View Product')}
+                    outOfStockText={dictionary?.product.outOfStock || (locale === 'th' ? 'สินค้าหมด' : 'Out of Stock')}
+                />
 
                 {/* Affiliate Disclaimer */}
                 <p className="text-[10px] text-zen-muted text-center mt-2">
