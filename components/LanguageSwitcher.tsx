@@ -19,16 +19,25 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
+  // Safety check: ensure currentLang is valid
+  const validLang: Locale = (currentLang && languages[currentLang as keyof typeof languages]) 
+    ? currentLang 
+    : 'th'
+
   const switchLanguage = (newLang: Locale) => {
-    if (newLang === currentLang) {
+    if (newLang === validLang) {
       setIsOpen(false)
       return
     }
 
     // Replace the locale in the pathname
-    const segments = pathname.split('/')
-    segments[1] = newLang
-    const newPath = segments.join('/')
+    const segments = (pathname || '').split('/').filter(Boolean)
+    if (segments.length > 0 && (segments[0] === 'th' || segments[0] === 'en')) {
+      segments[0] = newLang
+    } else {
+      segments.unshift(newLang)
+    }
+    const newPath = '/' + segments.join('/')
     
     router.push(newPath)
     setIsOpen(false)
@@ -42,8 +51,8 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
         aria-label="Change language"
       >
         <Globe size={18} />
-        <span>{languages[currentLang].flag}</span>
-        <span className="font-medium">{languages[currentLang].name}</span>
+        <span>{languages[validLang].flag}</span>
+        <span className="font-medium">{languages[validLang].name}</span>
       </button>
 
       {isOpen && (
@@ -61,14 +70,14 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
                 key={lang}
                 onClick={() => switchLanguage(lang as Locale)}
                 className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
-                  lang === currentLang
+                  lang === validLang
                     ? 'bg-zen-accent text-white'
                     : 'text-zen-text hover:bg-stone-50'
                 }`}
               >
                 <span className="text-xl">{flag}</span>
                 <span className="font-medium">{name}</span>
-                {lang === currentLang && (
+                {lang === validLang && (
                   <span className="ml-auto text-xs">✓</span>
                 )}
               </button>

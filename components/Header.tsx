@@ -26,8 +26,12 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Extract lang from pathname
-  const lang = pathname.split('/')[1] as Locale || currentLang;
+  // Extract lang from pathname with safety check
+  const pathSegments = (pathname || '').split('/').filter(Boolean)
+  const extractedLang = pathSegments[0] as Locale
+  const lang: Locale = (extractedLang === 'th' || extractedLang === 'en') 
+    ? extractedLang 
+    : (currentLang || 'th')
 
   const navLinks = [
     { name: currentLang === 'th' ? 'หน้าแรก' : 'Home', path: `/${lang}` },
