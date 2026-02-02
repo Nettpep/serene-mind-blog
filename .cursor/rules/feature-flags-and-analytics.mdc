@@ -1,0 +1,14 @@
+---
+description: Feature flags (ads) + analytics guidance (no secrets in code)
+alwaysApply: true
+---
+
+# Feature Flags & Analytics
+
+- **Feature flags**: use env-driven toggles (e.g. `NEXT_PUBLIC_SHOW_PRODUCT_ADS`) via `lib/site-config.ts`.
+- **Default safe**: flags default to **off** unless explicitly enabled.
+- **No secrets**: analytics IDs in env (`NEXT_PUBLIC_*`), never hardcode keys.
+- **Ads/products**: wrap ad blocks with `SHOW_PRODUCT_ADS` so you can ship safely before monetization.
+- **Traffic tracking**:
+  - Prefer GA4 or Vercel Analytics (see `docs/ANALYTICS_GUIDE.md`).
+  - Avoid collecting PII; track only aggregate analytics.

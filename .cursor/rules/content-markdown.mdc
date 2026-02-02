@@ -1,0 +1,15 @@
+---
+description: Content markdown conventions (frontmatter, headings, SEO)
+globs: "content/posts/**/*.md"
+alwaysApply: false
+---
+
+# Markdown Content Conventions
+
+- **Frontmatter required**: `id`, `title`, `excerpt`, `date`, `imageUrl`, `category`, `tags`.
+- **Date format**: store as ISO (`YYYY-MM-DD`) to keep sorting/caching consistent.
+- **Series** (optional): `series: { id, title, order, totalParts }`.
+- **Headings**:
+  - Use H2/H3 hierarchy; keep headings descriptive (SEO).
+  - Optional custom IDs: `## Title {#custom-id}` for stable TOC anchors.
+- **Images**: use remote URLs allowed by `next.config.js` or document new hosts first.
