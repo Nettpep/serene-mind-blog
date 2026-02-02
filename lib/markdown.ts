@@ -12,9 +12,7 @@ import type { Locale } from '@/i18n-config'
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
 export function getAllPostSlugs(locale: Locale = 'th'): string[] {
-  const localeDirectory = locale === 'th' 
-    ? postsDirectory 
-    : path.join(postsDirectory, locale)
+  const localeDirectory = path.join(postsDirectory, locale)
   
   if (!fs.existsSync(localeDirectory)) {
     return []
@@ -28,9 +26,7 @@ export function getAllPostSlugs(locale: Locale = 'th'): string[] {
 
 export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
   try {
-    const localeDirectory = locale === 'th' 
-      ? postsDirectory 
-      : path.join(postsDirectory, locale)
+    const localeDirectory = path.join(postsDirectory, locale)
     const fullPath = path.join(localeDirectory, `${slug}.md`)
 
     if (!fs.existsSync(fullPath)) {

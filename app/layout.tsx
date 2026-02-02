@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { i18n } from '@/i18n-config'
 import LangScript from '@/components/LangScript'
@@ -6,6 +6,9 @@ import LangScript from '@/components/LangScript'
 export const metadata: Metadata = {
   title: 'Serene Mind | จิตวิทยาและสมาธิ',
   description: 'พื้นที่แห่งความสงบและการเรียนรู้เรื่องจิตวิทยา สมาธิ และกฎอิทัปปัจจยตา',
+}
+
+export const viewport: Viewport = {
   themeColor: '#FDFBF7',
 }
 

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import '../globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -23,8 +23,11 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     description: lang === 'th'
       ? 'พื้นที่แห่งความสงบและการเรียนรู้เรื่องจิตวิทยา สมาธิ และกฎอิทัปปัจจยตา'
       : 'A space for peace and learning about psychology, meditation, and the law of Idappaccayatā',
-    themeColor: '#FDFBF7',
   }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#FDFBF7',
 }
 
 export default async function RootLayout({ children, params }: LayoutProps) {
