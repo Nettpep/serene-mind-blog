@@ -71,7 +71,10 @@
     "startTyping": "Start typing to search posts...",
     "found": "Found",
     "posts": "posts",
-    "noPosts": "No posts found in this category"
+    "noPosts": "No posts found",
+    "select": "Select",
+    "open": "Open",
+    "close": "Close"
   },
   "footer": {
     "copyright": "All rights reserved",

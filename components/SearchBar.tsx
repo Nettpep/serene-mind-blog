@@ -184,15 +184,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ posts }) => {
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-stone-100 rounded">↑↓</kbd>
-                  <span>เลือก</span>
+                  <span>{dict.search.select}</span>
                 </span>
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-stone-100 rounded">↵</kbd>
-                  <span>เปิด</span>
+                  <span>{dict.search.open}</span>
                 </span>
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-stone-100 rounded">Esc</kbd>
-                  <span>ปิด</span>
+                  <span>{dict.search.close}</span>
                 </span>
               </div>
             </div>
