@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href={`/${lang}`} className="flex items-center gap-3 group">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isScrolled ? 'bg-zen-accent text-white' : 'bg-white text-zen-accent shadow-md'}`}>
              <span className="font-serif font-bold text-xl leading-none pt-1">S</span>
           </div>

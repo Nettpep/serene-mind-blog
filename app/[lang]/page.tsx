@@ -4,7 +4,7 @@ import DailyQuote from '@/components/DailyQuote'
 import PostList from '@/components/PostList'
 import CategoryFilter from '@/components/CategoryFilter'
 import ProductRecommendation from '@/components/ProductRecommendation'
-import { getAllPosts } from '@/lib/markdown'
+import { getAllPostsCached } from '@/lib/markdown'
 import { getDictionary } from '@/lib/get-dictionary'
 import { getPostsByCategory } from '@/lib/categories'
 import type { Locale } from '@/i18n-config'
@@ -18,7 +18,7 @@ export default async function Home({ params, searchParams }: PageProps) {
   const { lang } = await params
   const { category: categoryParam } = await searchParams
   const dictionary = await getDictionary(lang)
-  const allPosts = await getAllPosts(lang)
+  const allPosts = await getAllPostsCached(lang)
   const posts = categoryParam
     ? getPostsByCategory(allPosts, categoryParam)
     : allPosts

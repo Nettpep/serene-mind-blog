@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { unstable_cache } from 'next/cache'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import remarkGfm from 'remark-gfm'
@@ -10,6 +11,9 @@ import { BlogPost } from '@/types'
 import type { Locale } from '@/i18n-config'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
+
+/** Cache revalidate time (seconds). Reduces disk + CPU load under high traffic. */
+const CACHE_REVALIDATE = 60
 
 export function getAllPostSlugs(locale: Locale = 'th'): string[] {
   const localeDirectory = path.join(postsDirectory, locale)
@@ -24,7 +28,7 @@ export function getAllPostSlugs(locale: Locale = 'th'): string[] {
     .map((name) => name.replace(/\.md$/, ''))
 }
 
-export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
+async function getPostBySlugUncached(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
   try {
     const localeDirectory = path.join(postsDirectory, locale)
     const fullPath = path.join(localeDirectory, `${slug}.md`)
@@ -85,6 +89,15 @@ export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promis
   }
 }
 
+/** Cached per (slug, locale). Revalidates every CACHE_REVALIDATE seconds for high-traffic scaling. */
+export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
+  return unstable_cache(
+    () => getPostBySlugUncached(slug, locale),
+    ['post', slug, locale],
+    { revalidate: CACHE_REVALIDATE, tags: ['posts', `post-${locale}-${slug}`] }
+  )()
+}
+
 export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
   const slugs = getAllPostSlugs(locale)
   const posts = await Promise.all(
@@ -95,9 +108,29 @@ export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
   return posts
     .filter((post): post is BlogPost => post !== null)
     .sort((a, b) => {
-      // Parse Thai date format or use ISO date
       const dateA = new Date(a.date).getTime()
       const dateB = new Date(b.date).getTime()
       return dateB - dateA
     })
+}
+
+/** Cached list of posts per locale. Use for home page and API to reduce load under high traffic. */
+export async function getAllPostsCached(locale: Locale = 'th'): Promise<BlogPost[]> {
+  return unstable_cache(
+    async () => {
+      const slugs = getAllPostSlugs(locale)
+      const posts = await Promise.all(
+        slugs.map((slug) => getPostBySlugUncached(slug, locale))
+      )
+      return posts
+        .filter((post): post is BlogPost => post !== null)
+        .sort((a, b) => {
+          const dateA = new Date(a.date).getTime()
+          const dateB = new Date(b.date).getTime()
+          return dateB - dateA
+        })
+    },
+    ['all-posts', locale],
+    { revalidate: CACHE_REVALIDATE, tags: ['posts', `posts-${locale}`] }
+  )()
 }

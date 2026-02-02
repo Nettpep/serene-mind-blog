@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
-import { getPostBySlug, getAllPostSlugs, getAllPosts } from '@/lib/markdown'
+import { getPostBySlug, getAllPostSlugs, getAllPostsCached } from '@/lib/markdown'
 import { extractTocFromHtml } from '@/lib/toc'
 import { formatDate } from '@/lib/date'
 import { getDictionary } from '@/lib/get-dictionary'
@@ -36,7 +36,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
   const tocItems = extractTocFromHtml(post.content)
 
   // Get all posts for series navigation
-  const allPosts = await getAllPosts(lang)
+  const allPosts = await getAllPostsCached(lang)
 
   return (
     <>

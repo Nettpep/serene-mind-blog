@@ -1,5 +1,12 @@
 # Performance Refactor Plan
 
+## ✅ สถานะปัจจุบัน (อัปเดตล่าสุด)
+- **Phase 1:** เสร็จแล้ว (Loading UI, Hero/Footer/ProductRec Server, Image optimize)
+- **Phase 2:** เสร็จแล้ว (URL params filter, throttle, dynamic SearchBar, Suspense)
+- **แก้เพิ่ม:** Header logo link → `/${lang}` (รักษาภาษาเมื่อคลิกโลโก้)
+
+---
+
 ## 🎯 เป้าหมาย
 ลดเวลา page transition จาก ~1-2s เหลือ < 500ms และปรับปรุง perceived performance
 
