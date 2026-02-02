@@ -1,0 +1,21 @@
+---
+description: Next.js App Router standards (RSC, caching, loading, SEO)
+globs: "{app,components,lib}/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Next.js App Router Standards
+
+- **RSC first**: keep components Server by default; isolate interactivity to tiny client components.
+- **Data/cache**:
+  - Prefer cached helpers for expensive work (fs/markdown parsing).
+  - Add `Cache-Control` for API routes when safe.
+- **Routing**:
+  - Keep locale in all internal links and redirects.
+  - Avoid hardcoded paths like `/post/...` (must be `/${locale}/post/...` encourages).
+- **UX**:
+  - Provide `loading.tsx` for slow routes; use `Suspense` for async islands.
+- **Images**:
+  - Use `next/image` for remote images; set `sizes` and only use `priority` for above-the-fold.
+- **SEO**:
+  - Use `generateMetadata` where applicable; keep titles/descriptions localized.

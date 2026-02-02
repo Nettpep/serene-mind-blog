@@ -1,0 +1,16 @@
+---
+description: i18n & localization rules (locale routing, dictionaries, dates)
+globs: "{app,components,lib}/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# i18n & Localization
+
+- **Locale routing**: all internal `href` must include `/${lang}` (or use a helper).
+- **Language switch**: preserve the rest of the path when switching locales.
+- **Strings**:
+  - Prefer `dictionary` strings over inline literals for UI labels.
+  - If literals are unavoidable, gate by locale (`lang === 'th' ? ... : ...`).
+- **Dates**: format with `formatDate(date, locale)`; never force Thai in English mode.
+- **Series/related**: navigation between parts must keep locale; no fallback to default locale.
+- **Test quickly**: verify `/th` and `/en` for the changed flow (home + post detail).

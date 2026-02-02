@@ -1,0 +1,18 @@
+---
+description: Constitution: core rules for AI work in this repo
+alwaysApply: true
+---
+
+# Serene Mind Blog — AI Constitution (Core)
+
+- **Scope**: Implement what the user asked; avoid unrelated refactors.
+- **Quality bar**: Prefer small, safe diffs; keep types sound; no broken builds.
+- **Tooling**: Read before editing; after substantive edits run targeted lints.
+- **Dependencies**: Do not add new packages unless clearly necessary; explain why.
+- **Next.js/App Router**:
+  - Default to **Server Components**; add `'use client'` only when needed.
+  - Never pass event handlers from Server → Client props (split components).
+- **i18n**: Preserve locale in links (`/${lang}/...`); no hardcoded Thai/English UI text when dictionary exists.
+- **Performance**: Avoid heavy work on every request; cache filesystem/markdown work.
+- **Security**: No secrets in repo; prefer env vars for keys/toggles/analytics IDs.
+- **Git**: Do **not** commit/push unless the user explicitly asks.
