@@ -12,6 +12,8 @@ export default function SearchBarWrapper() {
   const pathname = usePathname()
 
   useEffect(() => {
+    if (!pathname) return
+    
     // Extract locale from pathname (e.g., /th/... or /en/...)
     const segments = pathname.split('/').filter(Boolean)
     const locale: Locale = (segments[0] === 'en' ? 'en' : 'th')
