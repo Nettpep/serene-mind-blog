@@ -85,9 +85,31 @@
   },
   "donate": {
     "title": "Support Us",
-    "description": "Your support helps us continue creating quality content",
+    "subtitle": "Creating Quality Content Together",
+    "description": "Your support helps us continue creating quality content. Every contribution, no matter how small, makes a meaningful difference.",
+    "whySupport": "Why Support Us?",
+    "reasons": [
+      "Helps us create quality articles consistently",
+      "No ads interrupting the main content",
+      "Free access for everyone",
+      "Evidence-based and quality content"
+    ],
     "koFi": "Ko-fi",
     "paypal": "PayPal",
-    "buyMeACoffee": "Buy Me a Coffee"
+    "buyMeACoffee": "Buy Me a Coffee",
+    "thankYou": "Thank you for your support 🙏"
+  },
+  "toc": {
+    "title": "Table of Contents"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "showing": "Showing",
+    "to": "to",
+    "ofTotal": "of",
+    "posts": "posts"
   }
 }

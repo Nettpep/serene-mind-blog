@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Heart, Coffee } from 'lucide-react'
+import { Heart, Coffee, Sparkles } from 'lucide-react'
 import type { Locale } from '@/i18n-config'
 
 interface DonateButtonProps {
@@ -9,10 +9,14 @@ interface DonateButtonProps {
   dictionary: {
     donate: {
       title: string
+      subtitle?: string
       description: string
+      whySupport?: string
+      reasons?: string[]
       koFi: string
       paypal: string
       buyMeACoffee: string
+      thankYou?: string
     }
   }
 }
@@ -32,74 +36,88 @@ const DonateButton: React.FC<DonateButtonProps> = ({ locale, dictionary }) => {
   const hasAnyUrl = koFiUrl || paypalUrl || buyMeACoffeeUrl
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="flex items-center gap-2 text-zen-text/70 text-sm font-light">
-        <Heart size={14} className="text-zen-accent" />
-        <span>{dictionary.donate.title}</span>
+    <div className="w-full">
+      {/* Header */}
+      <div className="text-center mb-6">
+        <div className="inline-flex items-center gap-2 mb-3">
+          <Sparkles size={20} className="text-zen-accent" />
+          <h3 className="font-serif text-2xl text-zen-text font-bold">
+            {dictionary.donate.title}
+          </h3>
+        </div>
+        {dictionary.donate.subtitle && (
+          <p className="text-zen-text/70 text-sm font-light mb-4">
+            {dictionary.donate.subtitle}
+          </p>
+        )}
+        {dictionary.donate.description && (
+          <p className="text-zen-text/60 text-sm leading-relaxed max-w-md mx-auto mb-6">
+            {dictionary.donate.description}
+          </p>
+        )}
       </div>
-      <div className="flex flex-wrap gap-2 justify-center">
+
+      {/* Donation Buttons */}
+      <div className="flex flex-wrap gap-3 justify-center mb-4">
         {koFiUrl ? (
           <a
             href={koFiUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#FF5E5B] hover:bg-[#FF5E5B]/90 text-white rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-[#FF5E5B] hover:bg-[#FF5E5B]/90 text-white rounded-xl text-sm font-medium transition-all shadow-md hover:shadow-lg hover:scale-105"
           >
-            <Coffee size={14} />
-            {dictionary.donate.koFi}
+            <Coffee size={16} />
+            <span>{dictionary.donate.koFi}</span>
           </a>
         ) : (
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-200 text-stone-400 rounded-lg text-sm font-medium cursor-not-allowed opacity-50">
-            <Coffee size={14} />
-            {dictionary.donate.koFi}
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-stone-200 text-stone-400 rounded-xl text-sm font-medium cursor-not-allowed opacity-50">
+            <Coffee size={16} />
+            <span>{dictionary.donate.koFi}</span>
           </div>
         )}
+        
         {paypalUrl ? (
           <a
             href={paypalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#0070BA] hover:bg-[#0070BA]/90 text-white rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-[#0070BA] hover:bg-[#0070BA]/90 text-white rounded-xl text-sm font-medium transition-all shadow-md hover:shadow-lg hover:scale-105"
           >
-            <Heart size={14} />
-            {dictionary.donate.paypal}
+            <Heart size={16} />
+            <span>{dictionary.donate.paypal}</span>
           </a>
         ) : (
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-200 text-stone-400 rounded-lg text-sm font-medium cursor-not-allowed opacity-50">
-            <Heart size={14} />
-            {dictionary.donate.paypal}
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-stone-200 text-stone-400 rounded-xl text-sm font-medium cursor-not-allowed opacity-50">
+            <Heart size={16} />
+            <span>{dictionary.donate.paypal}</span>
           </div>
         )}
+        
         {buyMeACoffeeUrl ? (
           <a
             href={buyMeACoffeeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFDD00] hover:bg-[#FFDD00]/90 text-zen-text rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-[#FFDD00] hover:bg-[#FFDD00]/90 text-zen-text rounded-xl text-sm font-medium transition-all shadow-md hover:shadow-lg hover:scale-105"
           >
-            <Coffee size={14} />
-            {dictionary.donate.buyMeACoffee}
+            <Coffee size={16} />
+            <span>{dictionary.donate.buyMeACoffee}</span>
           </a>
         ) : (
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-200 text-stone-400 rounded-lg text-sm font-medium cursor-not-allowed opacity-50">
-            <Coffee size={14} />
-            {dictionary.donate.buyMeACoffee}
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-stone-200 text-stone-400 rounded-xl text-sm font-medium cursor-not-allowed opacity-50">
+            <Coffee size={16} />
+            <span>{dictionary.donate.buyMeACoffee}</span>
           </div>
         )}
       </div>
-      {!hasAnyUrl && (
-        <p className="text-zen-text/40 text-xs text-center max-w-xs font-light italic">
-          {locale === 'th' 
-            ? 'ตั้งค่า donation links ใน .env.local เพื่อเปิดใช้งาน'
-            : 'Configure donation links in .env.local to enable'
-          }
+
+      {/* Thank You Message */}
+      {hasAnyUrl && dictionary.donate.thankYou && (
+        <p className="text-center text-zen-text/50 text-xs font-light italic mt-4">
+          {dictionary.donate.thankYou}
         </p>
       )}
-      {dictionary.donate.description && (
-        <p className="text-zen-text/50 text-xs text-center max-w-xs font-light">
-          {dictionary.donate.description}
-        </p>
-      )}
+
     </div>
   )
 }

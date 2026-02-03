@@ -29,6 +29,23 @@ function calculateRelevance(post: BlogPost, currentPost: BlogPost): number {
     const matchingTags = post.tags.filter(tag => currentPost.tags.includes(tag));
     score += matchingTags.length;
 
+    // Recency bonus: newer posts get bonus points
+    const currentDate = new Date();
+    const postDate = new Date(post.date);
+    const daysSincePublished = Math.floor((currentDate.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    if (daysSincePublished <= 30) {
+        // Published within last 30 days: +2 points
+        score += 2;
+    } else if (daysSincePublished <= 90) {
+        // Published within last 90 days: +1 point
+        score += 1;
+    } else if (daysSincePublished <= 180) {
+        // Published within last 180 days: +0.5 points
+        score += 0.5;
+    }
+    // Older than 180 days: no bonus
+
     return score;
 }
 
