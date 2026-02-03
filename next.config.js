@@ -14,6 +14,16 @@ const nextConfig = {
       },
     ],
   },
+  // Ensure proper handling of ES modules for remark/rehype plugins
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Ensure proper resolution of ES modules
+      config.resolve.extensionAlias = {
+        '.js': ['.js', '.ts', '.tsx'],
+      }
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
