@@ -3,17 +3,19 @@ import path from 'path'
 import { unstable_cache } from 'next/cache'
 import matter from 'gray-matter'
 import { remark } from 'remark'
+import { BlogPost } from '@/types'
+import type { Locale } from '@/i18n-config'
+
+// Import plugins - using the standard remark-rehype pipeline for reliability
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
-import { BlogPost } from '@/types'
-import type { Locale } from '@/i18n-config'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
-/** Cache revalidate time (seconds). Reduces disk + CPU load under high traffic. */
-const CACHE_REVALIDATE = 60
+/** Cache revalidate time (seconds). Reduce disk + CPU load in production; avoid stale content in dev. */
+const CACHE_REVALIDATE = process.env.NODE_ENV === 'production' ? 60 : 0
 
 export function getAllPostSlugs(locale: Locale = 'th'): string[] {
   const localeDirectory = path.join(postsDirectory, locale)
@@ -48,23 +50,48 @@ async function getPostBySlugUncached(slug: string, locale: Locale = 'th'): Promi
       return `${hashes} ${headingText}`
     })
 
-    // Process markdown to HTML
-    const processedContent = await remark()
-      .use(remarkGfm)
-      .use(remarkRehype)
-      .use(rehypeSlug) // Auto-generate IDs (will be overridden if custom ID exists)
-      .use(rehypeStringify)
-      .process(cleanedContent)
+    // Process markdown to HTML using remark-rehype pipeline
+    // This is the standard, reliable approach that works across all platforms
+    let contentHtml = ''
+    try {
+      // Ensure plugins are functions (handle both ES modules and CommonJS)
+      const gfm = typeof remarkGfm === 'function' ? remarkGfm : (remarkGfm as any).default || remarkGfm
+      const rehype = typeof remarkRehype === 'function' ? remarkRehype : (remarkRehype as any).default || remarkRehype
+      const slug = typeof rehypeSlug === 'function' ? rehypeSlug : (rehypeSlug as any).default || rehypeSlug
+      const stringify = typeof rehypeStringify === 'function' ? rehypeStringify : (rehypeStringify as any).default || rehypeStringify
 
-    let contentHtml = processedContent.toString()
+      const processedContent = await remark()
+        .use(gfm)
+        .use(rehype)
+        .use(slug) // Auto-generate IDs for headings
+        .use(stringify)
+        .process(cleanedContent)
 
-    // Replace auto-generated IDs with custom IDs if they exist
-    headingIdMap.forEach((customId, headingText) => {
-      // Find heading with this text and replace its ID
-      const escapedText = headingText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      const regex = new RegExp(`(<h([2-6])\\s+id=")[^"]+("[^>]*>${escapedText}</h\\2>)`, 'i')
-      contentHtml = contentHtml.replace(regex, `$1${customId}$3`)
-    })
+      contentHtml = processedContent.toString()
+      
+      // Replace auto-generated IDs with custom IDs if they exist
+      headingIdMap.forEach((customId, headingText) => {
+        // Find heading with this text and replace its ID
+        const escapedText = headingText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const regex = new RegExp(`(<h([2-6])\\s+id=")[^"]+("[^>]*>${escapedText}</h\\2>)`, 'i')
+        contentHtml = contentHtml.replace(regex, `$1${customId}$3`)
+      })
+      
+      // Debug: log if content is empty
+      if (!contentHtml || contentHtml.trim().length === 0) {
+        console.warn(`Warning: Empty HTML content for post ${slug} (${locale}). Markdown length: ${cleanedContent.length}`)
+      }
+    } catch (processError) {
+      console.error(`Error processing markdown for post ${slug}:`, processError)
+      console.error('Error details:', processError instanceof Error ? processError.stack : processError)
+      // Fallback: return raw markdown as HTML (basic escape)
+      contentHtml = cleanedContent
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>')
+    }
+
 
     return {
       id: data.id || slug,
@@ -91,6 +118,10 @@ async function getPostBySlugUncached(slug: string, locale: Locale = 'th'): Promi
 
 /** Cached per (slug, locale). Revalidates every CACHE_REVALIDATE seconds for high-traffic scaling. */
 export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
+  if (CACHE_REVALIDATE === 0) {
+    return getPostBySlugUncached(slug, locale)
+  }
+
   return unstable_cache(
     () => getPostBySlugUncached(slug, locale),
     ['post', slug, locale],
@@ -116,6 +147,20 @@ export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
 
 /** Cached list of posts per locale. Use for home page and API to reduce load under high traffic. */
 export async function getAllPostsCached(locale: Locale = 'th'): Promise<BlogPost[]> {
+  if (CACHE_REVALIDATE === 0) {
+    const slugs = getAllPostSlugs(locale)
+    const posts = await Promise.all(
+      slugs.map((slug) => getPostBySlugUncached(slug, locale))
+    )
+    return posts
+      .filter((post): post is BlogPost => post !== null)
+      .sort((a, b) => {
+        const dateA = new Date(a.date).getTime()
+        const dateB = new Date(b.date).getTime()
+        return dateB - dateA
+      })
+  }
+
   return unstable_cache(
     async () => {
       const slugs = getAllPostSlugs(locale)

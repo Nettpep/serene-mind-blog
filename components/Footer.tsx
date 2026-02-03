@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import DonateButton from './DonateButton';
 import type { Locale } from '@/i18n-config';
 
 interface FooterProps {
@@ -18,6 +19,13 @@ interface FooterProps {
       contactUs: string;
       brandDescription: string;
     };
+    donate: {
+      title: string;
+      description: string;
+      koFi: string;
+      paypal: string;
+      buyMeACoffee: string;
+    };
   };
 }
 
@@ -35,20 +43,27 @@ const Footer: React.FC<FooterProps> = ({ locale, dictionary }) => {
             </p>
           </div>
 
-          {/* Newsletter */}
-          <div className="w-full md:w-auto p-8 bg-zen-bg rounded-2xl">
-            <h5 className="text-zen-text font-serif text-lg mb-2">{dictionary.nav.blog}</h5>
-            <p className="text-zen-text/50 text-xs mb-6">{dictionary.footer.newsletterDescription}</p>
-            <form className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder={dictionary.footer.emailPlaceholder}
-                className="bg-white border border-stone-200 px-4 py-3 text-zen-text focus:outline-none focus:border-zen-accent focus:ring-1 focus:ring-zen-accent w-full sm:w-64 rounded-lg transition-all text-sm"
-              />
-              <button className="bg-zen-text text-white px-6 py-3 rounded-lg font-medium text-sm hover:bg-zen-accent transition-colors shadow-lg shadow-stone-200">
-                {dictionary.footer.subscribe}
-              </button>
-            </form>
+          <div className="flex flex-col md:flex-row gap-6 w-full md:w-auto">
+            {/* Newsletter */}
+            <div className="w-full md:w-auto p-8 bg-zen-bg rounded-2xl">
+              <h5 className="text-zen-text font-serif text-lg mb-2">{dictionary.nav.blog}</h5>
+              <p className="text-zen-text/50 text-xs mb-6">{dictionary.footer.newsletterDescription}</p>
+              <form className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  placeholder={dictionary.footer.emailPlaceholder}
+                  className="bg-white border border-stone-200 px-4 py-3 text-zen-text focus:outline-none focus:border-zen-accent focus:ring-1 focus:ring-zen-accent w-full sm:w-64 rounded-lg transition-all text-sm"
+                />
+                <button className="bg-zen-text text-white px-6 py-3 rounded-lg font-medium text-sm hover:bg-zen-accent transition-colors shadow-lg shadow-stone-200">
+                  {dictionary.footer.subscribe}
+                </button>
+              </form>
+            </div>
+
+            {/* Donate Section */}
+            <div className="w-full md:w-auto p-8 bg-gradient-to-br from-zen-accent/5 to-zen-accent/10 rounded-2xl border border-zen-accent/20">
+              <DonateButton locale={locale} dictionary={dictionary} />
+            </div>
           </div>
         </div>
 

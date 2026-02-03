@@ -9,7 +9,7 @@
     "title": "Serene Mind",
     "subtitle": "Where Ancient Wisdom Meets Modern Technology",
     "tagline": "Mindfulness & Causality",
-    "description": "Discover peace of mind through the laws of nature. Learn to be present and truly understand the origin of all feelings.",
+    "description": "A small space for hearts seeking peace and minds seeking to understand life",
     "cta": "Start Reading Articles"
   },
   "post": {
@@ -84,6 +84,13 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "contactUs": "Contact Us",
-    "brandDescription": "A space for awakening, understanding oneself, and understanding the world through the perspective of psychology and Buddhism. We believe that \"peace\" begins with understanding cause and effect."
+    "brandDescription": "A small space for hearts seeking peace and minds seeking to understand life"
+  },
+  "donate": {
+    "title": "Support Us",
+    "description": "Your support helps us continue creating quality content",
+    "koFi": "Ko-fi",
+    "paypal": "PayPal",
+    "buyMeACoffee": "Buy Me a Coffee"
   }
 }

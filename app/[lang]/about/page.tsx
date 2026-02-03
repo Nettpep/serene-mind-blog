@@ -39,6 +39,12 @@ export default async function AboutPage({ params }: PageProps) {
             <h2 className="font-serif text-3xl md:text-4xl text-zen-text mb-6 leading-[1.3]">
               {lang === 'th' ? 'ภารกิจของเรา' : 'Our Mission'}
             </h2>
+            <p className="text-zen-text/80 text-lg leading-[1.8] mb-6 font-light italic text-center">
+              {lang === 'th' 
+                ? 'พื้นที่เล็ก ๆ สำหรับใจที่อยากสงบ และสมองที่อยากเข้าใจชีวิต'
+                : 'A small space for hearts seeking peace and minds seeking to understand life'
+              }
+            </p>
             <p className="text-zen-text/80 text-lg leading-[1.8] mb-6 font-light">
               <strong className="font-medium text-zen-text">Serene Mind</strong> {lang === 'th' 
                 ? 'เป็นพื้นที่สำหรับการตื่นรู้ เข้าใจตนเอง และเข้าใจโลกผ่านมุมมองของจิตวิทยาและพุทธธรรม'
