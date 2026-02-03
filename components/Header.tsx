@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { Menu, X, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -35,7 +35,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ currentLang }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const pathname = usePathname();
   const rafRef = useRef<number | null>(null);
 
@@ -109,17 +108,6 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
 
           {/* Language Switcher */}
           <LanguageSwitcher currentLang={lang} />
-
-          <div className="h-4 w-[1px] bg-gray-300"></div>
-
-          <button 
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 hover:bg-zen-accent/10 text-zen-text/70 hover:text-zen-accent transition-all text-xs font-medium"
-            title="Ambient Sound"
-          >
-             {isPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
-             <span className="hidden lg:inline">{isPlaying ? 'On' : 'Off'}</span>
-          </button>
         </nav>
 
         {/* Mobile Menu Button */}
