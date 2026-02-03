@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import NavigationLink from './NavigationLink';
 import Image from 'next/image';
 import { BlogPost } from '@/types';
 import { ArrowRight } from 'lucide-react';
@@ -19,7 +19,7 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ post, locale, dictionary }) => {
   return (
-    <Link href={`/${locale}/post/${post.id}`} className="group block h-full">
+    <NavigationLink href={`/${locale}/post/${post.id}`} className="group block h-full">
       <article className="h-full bg-zen-surface rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-zen-accent/5 transition-all duration-500 ease-out flex flex-col hover:-translate-y-2">
         {/* Image Container */}
         <div className="relative overflow-hidden aspect-[16/10]">
@@ -27,6 +27,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, locale, dictionary }) => {
             src={post.imageUrl} 
             alt={post.title}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
           />
           <div className="absolute top-4 left-4">
@@ -56,7 +57,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, locale, dictionary }) => {
           </div>
         </div>
       </article>
-    </Link>
+    </NavigationLink>
   );
 };
 

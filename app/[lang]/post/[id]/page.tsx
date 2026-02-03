@@ -79,6 +79,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
               width={1200}
               height={600}
               className="w-full h-auto object-cover max-h-[600px]"
+              style={{ width: '100%', height: 'auto' }}
             />
           </div>
         </div>

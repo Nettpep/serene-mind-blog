@@ -9,10 +9,8 @@ body {
   color: #334155;
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
+/* Smooth Scrolling - removed from global to prevent slow page transitions
+   Smooth scroll is now handled per-element or via JavaScript for anchor links only */
 
 /* Custom Scrollbar for Zen feel */
 ::-webkit-scrollbar {
