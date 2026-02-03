@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import Link from 'next/link';
+import NavigationLink from './NavigationLink';
 import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { BlogPost } from '@/types';
 import type { Locale } from '@/i18n-config';
@@ -75,7 +75,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Previous Button */}
                 {previousPost ? (
-                    <Link
+                    <NavigationLink
                         href={`/${locale}/post/${previousPost.id}`}
                         className="group flex items-center gap-4 p-4 bg-white hover:bg-zen-accent/5 border border-stone-200 hover:border-zen-accent/40 rounded-xl transition-all duration-300"
                     >
@@ -86,7 +86,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                                 {previousPost.title}
                             </p>
                         </div>
-                    </Link>
+                    </NavigationLink>
                 ) : (
                     <div className="p-4 bg-gray-50 border border-stone-200 rounded-xl opacity-40">
                         <p className="text-xs text-zen-muted text-center">{dictionary.series.noPrevious}</p>
@@ -95,7 +95,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
 
                 {/* Next Button */}
                 {nextPost ? (
-                    <Link
+                    <NavigationLink
                         href={`/${locale}/post/${nextPost.id}`}
                         className="group flex items-center gap-4 p-4 bg-white hover:bg-zen-accent/5 border border-stone-200 hover:border-zen-accent/40 rounded-xl transition-all duration-300"
                     >
@@ -106,7 +106,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                             </p>
                         </div>
                         <ChevronRight className="text-zen-accent flex-shrink-0 group-hover:translate-x-1 transition-transform" size={20} />
-                    </Link>
+                    </NavigationLink>
                 ) : (
                     <div className="p-4 bg-gray-50 border border-stone-200 rounded-xl opacity-40">
                         <p className="text-xs text-zen-muted text-center">{dictionary.series.seriesComplete}</p>
@@ -124,7 +124,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                     <ul className="mt-4 space-y-2">
                         {seriesPosts.map((post) => (
                             <li key={post.id}>
-                                <Link
+                                <NavigationLink
                                     href={`/${locale}/post/${post.id}`}
                                     className={`block p-3 rounded-lg transition-all ${post.id === currentPost.id
                                             ? 'bg-zen-accent/10 border border-zen-accent/30 text-zen-accent font-medium'
@@ -136,7 +136,7 @@ const SeriesNavigation: React.FC<SeriesNavigationProps> = ({ currentPost, allPos
                                     {post.id === currentPost.id && (
                                         <span className="ml-2 text-xs text-zen-accent">{dictionary.series.currentlyReading}</span>
                                     )}
-                                </Link>
+                                </NavigationLink>
                             </li>
                         ))}
                     </ul>

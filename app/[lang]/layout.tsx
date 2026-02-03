@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from 'next'
 import '../globals.css'
+import '../nprogress.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SmoothScrollAnchor from '@/components/SmoothScrollAnchor'
+import NavigationProgress from '@/components/NavigationProgress'
 import type { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/get-dictionary'
 
@@ -36,6 +39,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   
   return (
     <>
+      <NavigationProgress />
+      <SmoothScrollAnchor />
       <Header currentLang={lang} />
       {children}
       <Footer locale={lang} dictionary={dictionary} />

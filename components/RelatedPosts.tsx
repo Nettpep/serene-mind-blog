@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import Link from 'next/link';
+import NavigationLink from './NavigationLink';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import { BlogPost } from '@/types';
@@ -69,7 +69,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ currentPost, allPosts, maxP
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((post) => (
-                    <Link
+                    <NavigationLink
                         key={post.id}
                         href={`/${lang}/post/${post.id}`}
                         className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-stone-100 hover:border-zen-accent"
@@ -108,7 +108,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ currentPost, allPosts, maxP
                                 <span>{formatDate(post.date, lang)}</span>
                             </div>
                         </div>
-                    </Link>
+                    </NavigationLink>
                 ))}
             </div>
         </div>
