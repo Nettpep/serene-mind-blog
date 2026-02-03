@@ -6,9 +6,10 @@ import { TocItem } from '@/types';
 
 interface TableOfContentsProps {
   items: TocItem[];
+  title?: string;
 }
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
+const TableOfContents: React.FC<TableOfContentsProps> = ({ items, title = 'Table of Contents' }) => {
   const [activeId, setActiveId] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +54,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
 
   const TocContent = () => (
     <>
-      <h4 className="text-gray-400 uppercase text-xs tracking-[0.2em] mb-6 font-bold">สารบัญ</h4>
+      <h4 className="text-gray-400 uppercase text-xs tracking-[0.2em] mb-6 font-bold">{title}</h4>
       <ul className="space-y-3">
         {items.map((item) => (
           <li key={item.id} className={getIndentClass(item.level)}>

@@ -269,7 +269,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
           <aside className="hidden lg:block w-1/4 relative">
             {/* Table of Contents - Sticky (เลื่อนตาม) */}
             <div className="sticky top-32">
-              <TableOfContents items={tocItems} />
+              <TableOfContents items={tocItems} title={dictionary.toc?.title || (lang === 'th' ? 'สารบัญ' : 'Table of Contents')} />
             </div>
 
             {/* Ad Space - แสดงเมื่อ NEXT_PUBLIC_SHOW_PRODUCT_ADS=true */}

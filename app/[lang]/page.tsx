@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import DailyQuote from '@/components/DailyQuote'
 import PostList from '@/components/PostList'
 import CategoryFilter from '@/components/CategoryFilter'
+import Pagination from '@/components/Pagination'
 import ProductRecommendation from '@/components/ProductRecommendation'
 import { getAllPostsCached } from '@/lib/markdown'
 import { getDictionary } from '@/lib/get-dictionary'
@@ -12,17 +13,26 @@ import type { Locale } from '@/i18n-config'
 
 interface PageProps {
   params: Promise<{ lang: Locale }>
-  searchParams: Promise<{ category?: string }>
+  searchParams: Promise<{ category?: string; page?: string }>
 }
+
+const POSTS_PER_PAGE = 9
 
 export default async function Home({ params, searchParams }: PageProps) {
   const { lang } = await params
-  const { category: categoryParam } = await searchParams
+  const { category: categoryParam, page: pageParam } = await searchParams
   const dictionary = await getDictionary(lang)
   const allPosts = await getAllPostsCached(lang)
-  const posts = categoryParam
+  const filteredPosts = categoryParam
     ? getPostsByCategory(allPosts, categoryParam)
     : allPosts
+
+  // Pagination logic
+  const currentPage = Math.max(1, parseInt(pageParam || '1', 10))
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const endIndex = startIndex + POSTS_PER_PAGE
+  const posts = filteredPosts.slice(startIndex, endIndex)
 
   return (
     <>
@@ -72,6 +82,17 @@ export default async function Home({ params, searchParams }: PageProps) {
         }>
           <PostList posts={posts} locale={lang} dictionary={dictionary} />
         </Suspense>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            locale={lang}
+            basePath={`/${lang}${categoryParam ? `?category=${encodeURIComponent(categoryParam)}` : ''}`}
+            dictionary={dictionary}
+          />
+        )}
 
         {/* Product Recommendations (หน้าแรก) - แสดงเมื่อ NEXT_PUBLIC_SHOW_PRODUCT_ADS=true */}
         {SHOW_PRODUCT_ADS && (
