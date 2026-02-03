@@ -7,6 +7,7 @@ interface PostListProps {
   locale: Locale
   dictionary: {
     post: {
+      read: string
       readMore: string
     }
     search?: {

@@ -133,6 +133,14 @@ const Header: React.FC<HeaderProps> = ({ currentLang }) => {
                 {link.name}
               </Link>
             ))}
+            
+            {/* Search Bar for Mobile */}
+            <div className="w-full max-w-xs">
+              <SearchBarWrapper />
+            </div>
+            
+            {/* Language Switcher for Mobile */}
+            <LanguageSwitcher currentLang={lang} />
           </nav>
         </div>
       )}

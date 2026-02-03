@@ -9,6 +9,8 @@ export default function LangScript() {
   const pathname = usePathname()
 
   useEffect(() => {
+    if (!pathname) return
+    
     // Extract locale from pathname
     const segments = pathname.split('/').filter(Boolean)
     const locale: Locale = (segments[0] === 'en' ? 'en' : 'th')
