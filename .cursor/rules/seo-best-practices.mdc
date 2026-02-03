@@ -1,0 +1,193 @@
+# SEO Best Practices
+
+## Core Principles
+- Every page must have unique, descriptive `title` and `description` metadata
+- Optimize for both search engines (Google) and users (readability)
+- Support multiple languages (th + en) with proper locale structure
+
+---
+
+## Metadata Requirements
+
+### 1. Page Titles
+- **Format**: `[Page Title] | Serene Mind`
+- **Length**: 50-60 characters (optimal for Google)
+- **Content**: Include primary keyword near the beginning
+- **Uniqueness**: Every page/post must have a unique title
+
+Example:
+```typescript
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Understanding Vipassana Meditation | Serene Mind',
+    description: '...',
+  }
+}
+```
+
+### 2. Meta Descriptions
+- **Length**: 150-160 characters
+- **Content**: Clear summary that includes keywords naturally
+- **Call-to-action**: Optional but helpful (e.g., "Learn more about...")
+- **Uniqueness**: Each page must have unique description
+
+### 3. Blog Posts
+- Must use `generateMetadata()` to create dynamic metadata per post
+- Include OpenGraph tags for social sharing
+- Use post `title`, `excerpt`, `imageUrl`, `date`, `tags`
+
+Example:
+```typescript
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPostBySlug(id, lang)
+  
+  return {
+    title: `${post.title} | Serene Mind`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      images: [post.imageUrl],
+    },
+  }
+}
+```
+
+---
+
+## Technical SEO
+
+### 1. Sitemap (sitemap.ts)
+- Must include all public pages
+- Update automatically when new posts added
+- Include `lastModified`, `changeFrequency`, `priority`
+- Support all locales (th, en)
+
+### 2. Robots.txt (robots.ts)
+- Allow all user-agents by default
+- Disallow `/api/`, `/_next/`
+- Point to sitemap location
+
+### 3. URL Structure
+- Clean, readable URLs: `/en/post/meditation-basics`
+- Include locale in path: `/{locale}/...`
+- Use slugs, not IDs when possible
+- Lowercase, hyphen-separated
+
+---
+
+## Content Optimization
+
+### 1. Headings (H1-H6)
+- One H1 per page (page title)
+- Use H2-H6 for structure
+- Include keywords naturally in headings
+- Maintain logical hierarchy
+
+### 2. Keywords
+- Primary keyword in: H1, first paragraph, meta title/description
+- Use related keywords (LSI) throughout
+- Avoid keyword stuffing (write naturally)
+- Include keywords in image alt text
+
+### 3. Internal Linking
+- Link to related posts/pages
+- Use descriptive anchor text (not "click here")
+- Maintain logical site structure
+- Help users navigate related content
+
+---
+
+## Images
+
+### 1. Optimization
+- Use Next.js `<Image>` component (automatic optimization)
+- Always include `alt` attribute (describe image for SEO + accessibility)
+- Provide `width` and `height` or use `fill` with `sizes`
+- Use modern formats (WebP via Next.js optimization)
+
+### 2. Alt Text
+- Descriptive but concise (5-10 words)
+- Include relevant keywords naturally
+- Don't start with "Image of..." (implied)
+
+Example:
+```tsx
+<Image
+  src={post.imageUrl}
+  alt={post.title}
+  width={1200}
+  height={600}
+  sizes="(max-width: 768px) 100vw, 1200px"
+/>
+```
+
+---
+
+## Multi-Language (i18n)
+
+### 1. Structure
+- Each locale has separate content: `/th/`, `/en/`
+- Default locale: `en` (global audience)
+- Support locale in all dynamic routes
+
+### 2. Content
+- Translate all UI text via dictionaries
+- Keep separate markdown files per locale
+- Maintain consistency in topics across languages
+
+### 3. Metadata
+- Translate title/description per locale
+- Use appropriate language-specific keywords
+
+---
+
+## Performance (affects SEO)
+
+### 1. Core Web Vitals
+- LCP (Largest Contentful Paint): < 2.5s
+- FID (First Input Delay): < 100ms
+- CLS (Cumulative Layout Shift): < 0.1
+
+### 2. Best Practices
+- Use Next.js SSG/ISR for static content
+- Lazy load images (default in Next.js)
+- Minimize JavaScript bundle size
+- Cache API responses when possible
+
+---
+
+## Checklist for New Pages/Posts
+
+- [ ] Unique `title` with keyword (50-60 chars)
+- [ ] Unique `description` (150-160 chars)
+- [ ] OpenGraph metadata (for social sharing)
+- [ ] Proper heading hierarchy (H1 → H2 → H3)
+- [ ] Images with descriptive `alt` text
+- [ ] Internal links to related content
+- [ ] Mobile-friendly (responsive design)
+- [ ] Fast load time (< 3s)
+- [ ] Valid HTML (no errors)
+- [ ] Tested in Google Search Console
+
+---
+
+## Tools & Monitoring
+
+1. **Google Search Console** — Track rankings, errors, indexing
+2. **Sitemap submission** — Submit `/sitemap.xml` to GSC
+3. **Page Speed Insights** — Test performance
+4. **Lighthouse** — Audit SEO, performance, accessibility
+
+---
+
+## Do Not
+
+- ❌ Use generic titles like "Blog Post | Serene Mind"
+- ❌ Duplicate meta descriptions across pages
+- ❌ Keyword stuff (unnatural repetition)
+- ❌ Hide text for SEO (cloaking)
+- ❌ Ignore mobile optimization
+- ❌ Create thin content (< 300 words without value)
+- ❌ Use auto-generated content without review

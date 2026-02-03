@@ -60,10 +60,10 @@ export default async function ContactPage({ params }: PageProps) {
                   : 'Reach us at the email below. We typically respond within 3–5 business days.'}
               </p>
               <a
-                href="mailto:contact@serenemind.com"
+                href="mailto:contact@serenemind.blog"
                 className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-zen-bg border border-stone-200 text-zen-text hover:border-zen-accent hover:text-zen-accent transition-colors font-medium"
               >
-                contact@serenemind.com
+                contact@serenemind.blog
               </a>
               <p className="text-xs text-zen-muted mt-3">
                 {lang === 'th'
