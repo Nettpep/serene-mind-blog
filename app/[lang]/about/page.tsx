@@ -199,7 +199,7 @@ export default async function AboutPage({ params }: PageProps) {
               {lang === 'th' ? 'มีคำถามหรือข้อเสนอแนะ? เรายินดีรับฟัง' : 'Have questions or suggestions? We\'d love to hear from you'}
             </p>
             <p className="text-zen-text/60 font-light">
-              {lang === 'th' ? 'อีเมล:' : 'Email:'} <a href="mailto:contact@serenemind.com" className="text-zen-accent hover:underline">contact@serenemind.com</a>
+              {lang === 'th' ? 'อีเมล:' : 'Email:'} <a href="mailto:contact@serenemind.blog" className="text-zen-accent hover:underline">contact@serenemind.blog</a>
             </p>
           </div>
         </section>

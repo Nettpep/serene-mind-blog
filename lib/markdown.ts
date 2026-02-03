@@ -5,6 +5,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import { BlogPost } from '@/types'
 import type { Locale } from '@/i18n-config'
+import { i18n } from '@/i18n-config'
 
 // Import plugins - using the standard remark-rehype pipeline for reliability
 import remarkGfm from 'remark-gfm'
@@ -17,7 +18,7 @@ const postsDirectory = path.join(process.cwd(), 'content/posts')
 /** Cache revalidate time (seconds). Reduce disk + CPU load in production; avoid stale content in dev. */
 const CACHE_REVALIDATE = process.env.NODE_ENV === 'production' ? 60 : 0
 
-export function getAllPostSlugs(locale: Locale = 'th'): string[] {
+export function getAllPostSlugs(locale: Locale = i18n.defaultLocale): string[] {
   const localeDirectory = path.join(postsDirectory, locale)
   
   if (!fs.existsSync(localeDirectory)) {
@@ -30,7 +31,7 @@ export function getAllPostSlugs(locale: Locale = 'th'): string[] {
     .map((name) => name.replace(/\.md$/, ''))
 }
 
-async function getPostBySlugUncached(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
+async function getPostBySlugUncached(slug: string, locale: Locale = i18n.defaultLocale): Promise<BlogPost | null> {
   try {
     const localeDirectory = path.join(postsDirectory, locale)
     const fullPath = path.join(localeDirectory, `${slug}.md`)
@@ -117,7 +118,7 @@ async function getPostBySlugUncached(slug: string, locale: Locale = 'th'): Promi
 }
 
 /** Cached per (slug, locale). Revalidates every CACHE_REVALIDATE seconds for high-traffic scaling. */
-export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promise<BlogPost | null> {
+export async function getPostBySlug(slug: string, locale: Locale = i18n.defaultLocale): Promise<BlogPost | null> {
   if (CACHE_REVALIDATE === 0) {
     return getPostBySlugUncached(slug, locale)
   }
@@ -129,7 +130,7 @@ export async function getPostBySlug(slug: string, locale: Locale = 'th'): Promis
   )()
 }
 
-export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
+export async function getAllPosts(locale: Locale = i18n.defaultLocale): Promise<BlogPost[]> {
   const slugs = getAllPostSlugs(locale)
   const posts = await Promise.all(
     slugs.map((slug) => getPostBySlug(slug, locale))
@@ -146,7 +147,7 @@ export async function getAllPosts(locale: Locale = 'th'): Promise<BlogPost[]> {
 }
 
 /** Cached list of posts per locale. Use for home page and API to reduce load under high traffic. */
-export async function getAllPostsCached(locale: Locale = 'th'): Promise<BlogPost[]> {
+export async function getAllPostsCached(locale: Locale = i18n.defaultLocale): Promise<BlogPost[]> {
   if (CACHE_REVALIDATE === 0) {
     const slugs = getAllPostSlugs(locale)
     const posts = await Promise.all(

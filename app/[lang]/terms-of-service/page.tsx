@@ -195,8 +195,8 @@ export default async function TermsOfServicePage({ params }: PageProps) {
             </h2>
             <p>
               {lang === 'th' ? 'หากมีข้อสงสัย ติดต่อได้ที่:' : 'If you have questions, contact:'}{' '}
-              <a className="text-zen-accent hover:underline font-medium" href="mailto:contact@serenemind.com">
-                contact@serenemind.com
+              <a className="text-zen-accent hover:underline font-medium" href="mailto:contact@serenemind.blog">
+                contact@serenemind.blog
               </a>
             </p>
             <p className="text-xs text-zen-muted pt-2">

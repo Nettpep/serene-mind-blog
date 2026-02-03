@@ -118,8 +118,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
               {lang === 'th'
                 ? 'หากคุณมีคำถามเกี่ยวกับนโยบายความเป็นส่วนตัว กรุณาติดต่อเราได้ที่'
                 : 'If you have questions about this policy, contact us at'}{' '}
-              <a className="text-zen-accent hover:underline" href="mailto:contact@serenemind.com">
-                contact@serenemind.com
+              <a className="text-zen-accent hover:underline" href="mailto:contact@serenemind.blog">
+                contact@serenemind.blog
               </a>
               .
             </p>

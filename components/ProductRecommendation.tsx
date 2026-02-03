@@ -34,7 +34,7 @@ const ProductRecommendation: React.FC<ProductRecommendationProps> = ({
     affiliateLink,
     category,
     inStock = true,
-    locale = 'th',
+    locale = 'en',
     dictionary
 }) => {
     const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;

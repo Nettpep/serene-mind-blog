@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
 import { getPostBySlug, getAllPostSlugs, getAllPostsCached } from '@/lib/markdown'
 import { extractTocFromHtml } from '@/lib/toc'
@@ -22,6 +23,44 @@ interface PageProps {
     lang: Locale
     id: string
   }>
+}
+
+// Generate metadata for each blog post
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang, id } = await params
+  const post = await getPostBySlug(id, lang)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found | Serene Mind',
+      description: 'The requested blog post could not be found.',
+    }
+  }
+
+  return {
+    title: `${post.title} | Serene Mind`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      authors: ['Serene Mind Editorial Team'],
+      tags: post.tags,
+      images: [
+        {
+          url: post.imageUrl,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.imageUrl],
+    },
+  }
 }
 
 export default async function BlogPostDetail({ params }: PageProps) {

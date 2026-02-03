@@ -1,11 +1,12 @@
 import type { Locale } from '@/i18n-config'
+import { i18n } from '@/i18n-config'
 
 /**
  * Format date from ISO string (2023-10-12) to locale-aware format
  * - Thai: 12 ต.ค. 2023
  * - English: Oct 12, 2023
  */
-export function formatDate(isoDate: string, locale: Locale = 'th'): string {
+export function formatDate(isoDate: string, locale: Locale = i18n.defaultLocale): string {
   const date = new Date(isoDate)
   
   if (isNaN(date.getTime())) {
