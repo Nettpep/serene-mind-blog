@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { Globe } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Locale } from '@/i18n-config'
 
 const languages = {
@@ -20,9 +20,14 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
   const [isOpen, setIsOpen] = useState(false)
 
   // Safety check: ensure currentLang is valid
-  const validLang: Locale = (currentLang && languages[currentLang as keyof typeof languages]) 
-    ? currentLang 
+  const validLang: Locale = (currentLang && languages[currentLang as keyof typeof languages])
+    ? currentLang
     : 'th'
+
+  // Close dropdown automatically when route changes
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
 
   const switchLanguage = (newLang: Locale) => {
     if (newLang === validLang) {
@@ -38,7 +43,7 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
       segments.unshift(newLang)
     }
     const newPath = '/' + segments.join('/')
-    
+
     router.push(newPath)
     setIsOpen(false)
   }
@@ -59,12 +64,12 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-10"
+            className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-stone-200 overflow-hidden z-20">
+          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-stone-200 overflow-hidden z-50">
             {Object.entries(languages).map(([lang, { name, flag }]) => (
               <button
                 key={lang}
