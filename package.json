@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/nprogress": "^0.2.3",
+    "@vercel/analytics": "^1.6.1",
     "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.563.0",
