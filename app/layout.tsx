@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { i18n } from '@/i18n-config'
 import LangScript from '@/components/LangScript'
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Serene Mind | จิตวิทยาและสมาธิ',
