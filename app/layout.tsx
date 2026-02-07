@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { i18n } from '@/i18n-config'
 import LangScript from '@/components/LangScript'
-import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Serene Mind | จิตวิทยาและสมาธิ',
@@ -23,7 +22,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-zen-bg text-zen-text font-sans selection:bg-zen-accent/20 selection:text-zen-accent">
         <LangScript />
         {children}
-        <Analytics />
       </body>
     </html>
   )
